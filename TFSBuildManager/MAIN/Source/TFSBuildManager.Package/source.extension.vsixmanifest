@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Vsix xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="1.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2010">
+    <Identifier Id="5514499B-D1B9-4194-8D50-999F70DAC731">
+        <Name>Community TFS Build Manager VS2012</Name>
+        <Author>TfsBuildExtensions.codeplex.com</Author>
+        <Version>1.4.0.5</Version>
+        <Description xml:space="preserve">TfsBuildExtensions.codeplex.com</Description>
+        <Locale>1033</Locale>
+        <MoreInfoUrl>http://TfsBuildExtensions.codeplex.com</MoreInfoUrl>
+        <License>License.rtf</License>
+        <GettingStartedGuide>http://TfsBuildExtensions.codeplex.com</GettingStartedGuide>
+        <Icon>AppIcon.ico</Icon>
+        <PreviewImage>Preview.png</PreviewImage>
+        <InstalledByMsi>false</InstalledByMsi>
+        <SupportedProducts>
+            <VisualStudio Version="11.0">
+                <Edition>Ultimate</Edition>
+                <Edition>Premium</Edition>
+                <Edition>Pro</Edition>
+            </VisualStudio>
+        </SupportedProducts>
+        <SupportedFrameworkRuntimeEdition MinVersion="4.0" MaxVersion="4.0" />
+    </Identifier>
+    <References>
+        <Reference Id="Microsoft.VisualStudio.MPF" MinVersion="10.0">
+            <Name>Visual Studio MPF</Name>
+        </Reference>
+    </References>
+    <Content>
+        <VsPackage>|%CurrentProject%;PkgdefProjectOutputGroup|</VsPackage>
+    </Content>
+</Vsix>

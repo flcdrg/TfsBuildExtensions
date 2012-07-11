@@ -1,0 +1,428 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TfsBuildExtensions.Activities.LabManagement</name>
+    </assembly>
+    <members>
+        <member name="T:TfsBuildExtensions.Activities.BaseCodeActivity">
+            <summary>
+            Provides a base class to all Activities which support remoting
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.IBaseActivityMinimumArguments">
+            <summary>
+            Represents the minimum number of arguments that an activity must implement
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.IBaseActivityMinimumArguments.FailBuildOnError">
+            <summary>
+            Set to true to fail the build if the activity logs any errors. Default is false
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.IBaseActivityMinimumArguments.TreatWarningsAsErrors">
+            <summary>
+            Set to true to fail the build if the activity logs any errors. Default is false
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.IBaseActivityMinimumArguments.IgnoreExceptions">
+            <summary>
+            Set to true to ignore any unhandled exceptions thrown by activities. Default is false
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.IBaseActivityMinimumArguments.LogExceptionStack">
+            <summary>
+            Set to true to log the entire stack in the event of an exception. Default is true
+            <para></para>
+            <remarks>This parameter is ignored, if <see cref="P:TfsBuildExtensions.Activities.IBaseActivityMinimumArguments.FailBuildOnError"/> is true or <see cref="P:TfsBuildExtensions.Activities.IBaseActivityMinimumArguments.TreatWarningsAsErrors"/> is true </remarks>
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.BaseCodeActivity.Execute(System.Activities.CodeActivityContext)">
+            <summary>
+            Entry point to the Activity. It sets the context and executes InternalExecute which is implemented by derived activities
+            </summary>
+            <param name="context">CodeActivityContext</param>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.BaseCodeActivity.InternalExecute">
+            <summary>
+            InternalExecute method which activities should implement
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.BaseCodeActivity.LogBuildError(System.String)">
+            <summary>
+            Logs a message as a build error
+            Also can fail the build if the FailBuildOnError flag is set
+            </summary>
+            <param name="errorMessage">Message to save</param>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.BaseCodeActivity.LogBuildWarning(System.String)">
+            <summary>
+            Logs a message as a build warning
+            </summary>
+            <param name="warningMessage">Message to save</param>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.BaseCodeActivity.LogBuildMessage(System.String,Microsoft.TeamFoundation.Build.Client.BuildMessageImportance)">
+            <summary>
+            Logs a generical build message
+            </summary>
+            <param name="message">The message to save</param>
+            <param name="importance">The verbosity importance of the message</param>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.BaseCodeActivity.LogBuildMessage(System.String)">
+            <summary>
+            Logs a generical build message
+            </summary>
+            <param name="message">The message to save</param>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.BaseCodeActivity.LogBuildLink(System.String,System.Uri)">
+            <summary>
+            Logs a link to the build log
+            </summary>
+            <param name="message">Message to save as link name</param>
+            <param name="uri">Uri for link</param>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.BaseCodeActivity.AddTextNode(System.String,Microsoft.TeamFoundation.Build.Client.IBuildInformationNode)">
+            <summary>
+            Add a text node to the build log
+            </summary>
+            <param name="text">Display text</param>
+            <param name="parent">Parent node in the build log</param>
+            <returns>The new node containing the supplied text if <paramref name="parent"/> is not a null reference; otherwise null.</returns>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.BaseCodeActivity.AddLinkNode(System.String,System.Uri,Microsoft.TeamFoundation.Build.Client.IBuildInformationNode)">
+            <summary>
+            Add a hyperlink to the
+            </summary>
+            <param name="text">Display text of the hyperlink</param>
+            <param name="uri">Uri of the hyperlink</param>
+            <param name="parent">Parent node in the build log</param>
+            <returns>The new external link containing the supplied hyperlink if <paramref name="parent"/> is not a null reference; otherwise null.</returns>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.BaseCodeActivity.FailBuildOnError">
+            <summary>
+            Set to true to fail the build if the activity logs any errors. Default is false
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.BaseCodeActivity.TreatWarningsAsErrors">
+            <summary>
+            Set to true to fail the build if the activity logs any errors. Default is false
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.BaseCodeActivity.IgnoreExceptions">
+            <summary>
+            Set to true to ignore any unhandled exceptions thrown by activities. Default is false
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.BaseCodeActivity.LogExceptionStack">
+            <summary>
+            Set to true to log the entire stack in the event of an exception. Default is true
+            <para></para>
+            <remarks>This parameter is ignored, if <see cref="P:TfsBuildExtensions.Activities.BaseCodeActivity.FailBuildOnError"/> is true or <see cref="P:TfsBuildExtensions.Activities.BaseCodeActivity.TreatWarningsAsErrors"/> is true </remarks>
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.BaseCodeActivity.ActivityContext">
+            <summary>
+            Variable to hold CodeActivityContext
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.FailingBuildException">
+            <summary>
+            FailingBuild Exception
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.FailingBuildException.#ctor">
+            <summary>
+            Initializes a new instance of the FailingBuildException class
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.FailingBuildException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the FailingBuildException class
+            </summary>
+            <param name="message">Message to send</param>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.FailingBuildException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the FailingBuildException class
+            </summary>
+            <param name="message">Message to send</param>
+            <param name="innerException">Inner exception details</param>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.FailingBuildException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the FailingBuildException class
+            </summary>
+            <param name="info">Serialization information for the exception</param>
+            <param name="context">The streaming context for the exception</param>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.LabManagement.CheckIfEnvironmentIsLocked">
+            <summary>
+            Provides an activity that can be used to determine if an Environment is locked (via the file-lock)
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.LabManagement.CheckIfEnvironmentIsLocked.InternalExecute">
+            <summary>
+            Execute the Update Version Number build step.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.LabManagement.CheckIfEnvironmentIsLocked.LockingUNCShare">
+            <summary>
+            Defines the UNC Share where the flags exist
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.LabManagement.CheckIfEnvironmentIsLocked.EnvironmentName">
+            <summary>
+            Defines the Environment Name
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.LabManagement.CheckIfEnvironmentIsLocked.EnvironmentIsLocked">
+            <summary>
+            Defines the returned information indicating whether or not the lock-file is created, false
+            indicates that there was a problem creating the lock file
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.LabManagement.PauseEnvironment">
+            <summary>
+            This activity will set a TFS Lab Management Lab Environment in a Paused state.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.LabManagement.PauseEnvironment.InternalExecute">
+            <summary>
+            Execute the ShutdownEnvironment build activity.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.LabManagement.PauseEnvironment.EnvironmentName">
+            <summary>
+            Specifies the name of the environment to shutdown. The environment is located in the team project executing the build. 
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.LabManagement.RenameSnapshot">
+            <summary>
+            An activity renames a snapshot attached to a TFS Lab Management Lab Environment. This activity will only rename a snapshot
+            that is part of a lab environment that is in a Running state.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.LabManagement.RenameSnapshot.InternalExecute">
+            <summary>
+            Execute the RenameSnapshot build activity.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.LabManagement.RenameSnapshot.EnvironmentName">
+            <summary>
+            Specifies the name of the environment that contains the snapshot to be renamed. The environment is located 
+            in the team project executing the build. 
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.LabManagement.RenameSnapshot.CurrentSnapshotName">
+            <summary>
+            Specifies the current name of the snapshot to be renamed. 
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.LabManagement.RenameSnapshot.NewSnapshotName">
+            <summary>
+            Specifies the final name of the snapshot to be renamed. 
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.LabManagement.ShutdownEnvironment">
+            <summary>
+            An activity that shuts down a TFS Lab Management Lab Environment, environment selected by name.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.LabManagement.ShutdownEnvironment.InternalExecute">
+            <summary>
+            Execute the ShutdownEnvironment build activity.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.LabManagement.ShutdownEnvironment.EnvironmentName">
+            <summary>
+            Specifies the name of the environment to shutdown. The environment is located in the team project executing the build. 
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.LabManagement.GetEnvironment">
+            <summary>
+            This activity that returns a TFS Lab Management Lab Environments based on its name.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.LabManagement.GetEnvironment.InternalExecute">
+            <summary>
+            Execute the GetEnvironment build activity.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.LabManagement.GetEnvironment.EnvironmentName">
+            <summary>
+            Specifies the name of the environment to select. The environment is located in the team project executing the build. 
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.LabManagement.GetEnvironment.Environment">
+            <summary>
+            Defines the returned names of matching lab environments.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.LabManagement.ListLabSystems">
+            <summary>
+            An activity that lists TFS Lab Management Lab Systems based on tag filters.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.LabManagement.ListLabSystems.InternalExecute">
+            <summary>
+            Execute the ListEnvironment build activity.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.LabManagement.ListLabSystems.Tags">
+            <summary>
+            Specifies the filter criteria to match environments. The tags are to be specified as name-value
+            pairs (name=value) and only environments matching all tags will be returned. 
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.LabManagement.ListLabSystems.LabSystems">
+            <summary>
+            Defines the returned names of matching lab systems.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.LabManagement.GetEnvironmentLockedByBuildNumber">
+            <summary>
+            Provides an activity that allows the user to get the build number that currently has the environment locked
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.LabManagement.GetEnvironmentLockedByBuildNumber.InternalExecute">
+            <summary>
+            Execute the Update Version Number build step.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.LabManagement.GetEnvironmentLockedByBuildNumber.LockingUNCShare">
+            <summary>
+            Defines the UNC Share where the flags exist
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.LabManagement.GetEnvironmentLockedByBuildNumber.EnvironmentName">
+            <summary>
+            Defines the Environment Name
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.LabManagement.GetEnvironmentLockedByBuildNumber.BuildNumber">
+            <summary>
+            Returns the locking build number of the environment
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.LabManagement.ListEnvironments">
+            <summary>
+            An activity that lists TFS Lab Management Lab Environments based on tag filters.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.LabManagement.ListEnvironments.InternalExecute">
+            <summary>
+            Execute the ListEnvironments build activity.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.LabManagement.ListEnvironments.Tags">
+            <summary>
+            Specifies the filter criteria to match environments. The tags are to be specified as name-value
+            pairs (name=value) and only environments matching all tags will be returned. 
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.LabManagement.ListEnvironments.LabEnvironments">
+            <summary>
+            Defines the returned names of matching lab environments.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.LabManagement.LockEnvironment">
+            <summary>
+            Provides an activity that locked the environment and writes the build number into the lock file
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.LabManagement.LockEnvironment.InternalExecute">
+            <summary>
+            Execute the Update Version Number build step.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.LabManagement.LockEnvironment.LockingUNCShare">
+            <summary>
+            Defines the UNC Share where the flags exist
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.LabManagement.LockEnvironment.EnvironmentName">
+            <summary>
+            Defines the Environment Name
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.LabManagement.LockEnvironment.BuildNumber">
+            <summary>
+            Defines the Build Number
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.LabManagement.LockEnvironment.Success">
+            <summary>
+            Defines the returned information indicating whether or not the lock-file is created, false
+            indicates that there was a problem creating the lock file
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.LabManagement.UnlockEnvironment">
+            <summary>
+            Provides an activity that unlocks an environment, providing it is the build that locked it (unless explicitly overridden)
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.LabManagement.UnlockEnvironment.InternalExecute">
+            <summary>
+            Execute the Update Version Number build step.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.LabManagement.UnlockEnvironment.LockingUNCShare">
+            <summary>
+            Defines the UNC Share where the flags exist
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.LabManagement.UnlockEnvironment.EnvironmentName">
+            <summary>
+            Defines the Environment Name
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.LabManagement.UnlockEnvironment.BuildNumber">
+            <summary>
+            Defines the Build Number
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.LabManagement.UnlockEnvironment.ForceUnlock">
+            <summary>
+            Defines the flag used to indicate that the environment should be forcibly unlocked
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.LabManagement.UnlockEnvironment.Success">
+            <summary>
+            Defines the returned information indicating whether or not the lock-file is created, false
+            indicates that there was a problem creating the lock file
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.LabManagement.WaitForEnvironmentToBecomeAvailable">
+            <summary>
+            Provides an activity that can be used to wait until an environment because available to be
+            used
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.LabManagement.WaitForEnvironmentToBecomeAvailable.InternalExecute">
+            <summary>
+            Execute the Update Version Number build step.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.LabManagement.WaitForEnvironmentToBecomeAvailable.LockingUNCShare">
+            <summary>
+            Defines the UNC Share where the flags exist
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.LabManagement.WaitForEnvironmentToBecomeAvailable.EnvironmentList">
+            <summary>
+            Defines the List of Environments (by Name) to watch
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.LabManagement.WaitForEnvironmentToBecomeAvailable.MaximumWaitTimeSeconds">
+            <summary>
+            Defines the maximum wait time for this activity to wait until there is an available environment, 0 indicates
+            that there is no timeout.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.LabManagement.WaitForEnvironmentToBecomeAvailable.EnvironmentIsAvailable">
+            <summary>
+            Defines the returned information indicating whether or not the lock-file is created, false
+            indicates that there was a problem creating the lock file
+            </summary>
+        </member>
+    </members>
+</doc>

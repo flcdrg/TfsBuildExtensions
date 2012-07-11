@@ -1,0 +1,598 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TfsBuildExtensions.Activities.IIS7</name>
+    </assembly>
+    <members>
+        <member name="T:TfsBuildExtensions.Activities.BaseRemoteCodeActivity">
+            <summary>
+            Provides a base class to all Activities which support remoting
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.IBaseActivityMinimumArguments">
+            <summary>
+            Represents the minimum number of arguments that an activity must implement
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.IBaseActivityMinimumArguments.FailBuildOnError">
+            <summary>
+            Set to true to fail the build if the activity logs any errors. Default is false
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.IBaseActivityMinimumArguments.TreatWarningsAsErrors">
+            <summary>
+            Set to true to fail the build if the activity logs any errors. Default is false
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.IBaseActivityMinimumArguments.IgnoreExceptions">
+            <summary>
+            Set to true to ignore any unhandled exceptions thrown by activities. Default is false
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.IBaseActivityMinimumArguments.LogExceptionStack">
+            <summary>
+            Set to true to log the entire stack in the event of an exception. Default is true
+            <para></para>
+            <remarks>This parameter is ignored, if <see cref="P:TfsBuildExtensions.Activities.IBaseActivityMinimumArguments.FailBuildOnError"/> is true or <see cref="P:TfsBuildExtensions.Activities.IBaseActivityMinimumArguments.TreatWarningsAsErrors"/> is true </remarks>
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.BaseRemoteCodeActivity.authLevel">
+            <summary>
+            Variable to hold authenticationLevel
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.BaseRemoteCodeActivity.Execute(System.Activities.CodeActivityContext)">
+            <summary>
+            Executes the logic for this workflow activity
+            </summary>
+            <param name="context">CodeActivityContext</param>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.BaseRemoteCodeActivity.InternalExecute">
+            <summary>
+            InternalExecute method which activities should implement
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.BaseRemoteCodeActivity.LogBuildError(System.String)">
+            <summary>
+            Logs a message as a build error
+            Also can fail the build if the FailBuildOnError flag is set
+            </summary>
+            <param name="errorMessage">Message to save</param>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.BaseRemoteCodeActivity.LogBuildWarning(System.String)">
+            <summary>
+            Logs a message as a build warning
+            </summary>
+            <param name="warningMessage">Message to save</param>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.BaseRemoteCodeActivity.LogBuildMessage(System.String,Microsoft.TeamFoundation.Build.Client.BuildMessageImportance)">
+            <summary>
+            Logs a generical build message
+            </summary>
+            <param name="message">The message to save</param>
+            <param name="importance">The verbosity importance of the message</param>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.BaseRemoteCodeActivity.LogBuildLink(System.String,System.Uri)">
+            <summary>
+            Logs a link to the build log
+            </summary>
+            <param name="message">Message to save as link name</param>
+            <param name="uri">Uri for link</param>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.BaseRemoteCodeActivity.AddTextNode(System.String,Microsoft.TeamFoundation.Build.Client.IBuildInformationNode)">
+            <summary>
+            Add a text node to the build log
+            </summary>
+            <param name="text">Display text</param>
+            <param name="parent">Parent node in the build log</param>
+            <returns>The new node containing the supplied text</returns>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.BaseRemoteCodeActivity.AddLinkNode(System.String,System.Uri,Microsoft.TeamFoundation.Build.Client.IBuildInformationNode)">
+            <summary>
+            Add a hyperlink to the
+            </summary>
+            <param name="text">Display text of the hyperlink</param>
+            <param name="uri">Uri of the hyperlink</param>
+            <param name="parent">Parent node in the build log</param>
+            <returns>The new external link containing the supplied hyperlink</returns>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.BaseRemoteCodeActivity.FailBuildOnError">
+            <summary>
+            Set to true to fail the build if the activity logs any errors. Default is false
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.BaseRemoteCodeActivity.TreatWarningsAsErrors">
+            <summary>
+            Set to true to fail the build if the activity logs any errors. Default is false
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.BaseRemoteCodeActivity.IgnoreExceptions">
+            <summary>
+            Set to true to ignore any unhandled exceptions thrown by activities. Default is false
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.BaseRemoteCodeActivity.LogExceptionStack">
+            <summary>
+            Set to true to log the entire stack in the event of an exception. Default is true
+            <para></para>
+            <remarks>This parameter is ignored, if <see cref="P:TfsBuildExtensions.Activities.BaseRemoteCodeActivity.FailBuildOnError"/> is true or <see cref="P:TfsBuildExtensions.Activities.BaseRemoteCodeActivity.TreatWarningsAsErrors"/> is true </remarks>
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.BaseRemoteCodeActivity.ActivityContext">
+            <summary>
+            Variable to hold CodeActivityContext
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.BaseRemoteCodeActivity.MachineName">
+            <summary>
+            Sets the MachineName. Defaults to Environment.MachineName
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.BaseRemoteCodeActivity.UserName">
+            <summary>
+            Sets the UserName
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.BaseRemoteCodeActivity.UserPassword">
+            <summary>
+            Sets the UserPassword.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.BaseRemoteCodeActivity.Authority">
+            <summary>
+            Sets the authority to be used to authenticate the specified user.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.BaseRemoteCodeActivity.AuthenticationLevel">
+            <summary>
+            Sets the authentication level to be used to connect to WMI. Default is Default. Also supports: Call, Connect, None, Packet, PacketIntegrity, PacketPrivacy, Unchanged
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Web.IIS7AppPoolAction">
+            <summary>
+            IIS7AppPoolAction
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Web.IIS7AppPoolAction.CheckExists">
+            <summary>
+            CheckExists
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Web.IIS7AppPoolAction.Create">
+            <summary>
+            Create
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Web.IIS7AppPoolAction.Delete">
+            <summary>
+            Delete
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Web.IIS7AppPoolAction.Modify">
+            <summary>
+            Modify
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Web.IIS7AppPoolAction.Recycle">
+            <summary>
+            Recycle
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Web.IIS7AppPoolAction.SetIdentity">
+            <summary>
+            SetIdentity
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Web.IIS7AppPoolAction.SetPipelineMode">
+            <summary>
+            SetPiplelineMode
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Web.IIS7AppPoolAction.Stop">
+            <summary>
+            Stop
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Web.IIS7AppPoolAction.Start">
+            <summary>
+            Start
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Web.Iis7AppPool">
+            <summary>
+            Iis7AppPool
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Web.Iis7AppPool.InternalExecute">
+            <summary>
+            Executes the logic for this workflow activity
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7AppPool.Action">
+            <summary>
+            Specifies the action to perform
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7AppPool.PeriodicRestartPrivateMemory">
+            <summary>
+            Sets the private memory (kb) a process can use before the process is recycled. Default is 0. Set > 0 to use. Set to -1 to restore the Application Pool Default.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7AppPool.QueueLength">
+            <summary>
+            Sets the maximum number of requests to queue before rejecting additional requests. Default is 0. Set > 0 to use. Set to -1 to restore the Application Pool Default.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7AppPool.IdleTimeout">
+            <summary>
+            Sets a TimeSpan value in minutes for the period of time a process should remain idle. Set > 0 to use. Set to -1 to restore the Application Pool Default.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7AppPool.MaxProcesses">
+            <summary>
+            Sets the maximum number of worker processes allowed for the AppPool. Set to -1 to restore the Application Pool Default.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7AppPool.PeriodicRestartTime">
+            <summary>
+            Sets a TimeSpan value in minutes for the period of time that should elapse before a worker process is recycled. Default is 29 hours. Set > 0 to use. Set to -1 to restore the Application Pool Default for Modify or -1 to Disable Recycling.PeriodicRestartTime for Create
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7AppPool.RecycleTimes">
+            <summary>
+            Sets the times that the application pool should recycle. Format is 'hh:mm,hh:mm,hh:mm'. Set to "-1" to clear the RecycleTimes
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7AppPool.RecycleRequests">
+            <summary>
+            Sets the fixed number of requests to recycle the application pool. Set to -1 to restore the Application Pool Default.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7AppPool.RecycleInterval">
+            <summary>
+            Sets the RecycleInterval in minutes for the application pool. Set to -1 to restore the Application Pool Default.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7AppPool.AutoStart">
+            <summary>
+            Set whether the application pool should start automatically. Default is true.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7AppPool.Enable32BitAppOnWin64">
+            <summary>
+            Sets whether 32-bit applications are enabled on 64-bit processors. Default is false.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7AppPool.IdentityType">
+            <summary>
+            Sets the ProcessModelIdentityType. Default is LocalService
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7AppPool.PoolIdentity">
+            <summary>
+            Sets the user name associated with the security identity under which the application pool runs.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7AppPool.IdentityPassword">
+            <summary>
+            Sets the password associated with the PoolIdentity property.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7AppPool.ManagedRuntimeVersion">
+            <summary>
+            Sets the version number of the .NET Framework used by the application pool. Default is "v2.0".
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7AppPool.PipelineMode">
+            <summary>
+            Sets the ManagedPipelineMode. Default is ManagedPipelineMode.Integrated.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7AppPool.Name">
+            <summary>
+            Sets the name of the AppPool
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7AppPool.Force">
+            <summary>
+            Set to true to force the creation of an apppool, even if it exists.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7AppPool.Exists">
+            <summary>
+            Gets whether the Application Pool exists
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Web.IIS7BindingAction">
+            <summary>
+            IIS7BindingAction
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Web.IIS7BindingAction.Add">
+            <summary>
+            Add
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Web.IIS7BindingAction.CheckExists">
+            <summary>
+            CheckExists
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Web.IIS7BindingAction.Modify">
+            <summary>
+            Modify
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Web.IIS7BindingAction.Remove">
+            <summary>
+            Remove
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Web.Iis7Binding">
+            <summary>
+            Iis7Binding
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Web.Iis7Binding.InternalExecute">
+            <summary>
+            Executes the logic for this workflow activity
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Web.Iis7Binding.HexToData(System.String)">
+            <summary>
+            Parse certificate hash from a string.
+            </summary>
+            <remarks>Based on code from: http://www.codeproject.com/KB/recipes/hexencoding.aspx</remarks>
+            <param name="hexValue">hex values, can be space, dash or not-delimited</param>
+            <returns>byte[] encoded value</returns>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7Binding.Action">
+            <summary>
+            Specifies the action to perform
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7Binding.Name">
+            <summary>
+            Sets the name of the Website
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7Binding.Port">
+            <summary>
+            Sets the port of the Binding to Modify
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7Binding.BindingInformation">
+            <summary>
+            String containing binding information.
+            <para/>
+            Format: ip address:port:hostheader
+            <para/>
+            Example: *:80:sample.example.com or : *:443:
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7Binding.PreviousBindingInformation">
+            <summary>
+            Sets the PreviousBindingInformation to use when calling Modify
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7Binding.PreviousBindingProtocol">
+            <summary>
+            Sets the PreviousBindingProtocol to use when calling Modify
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7Binding.CertificateHash">
+            <summary>
+            If HTTPS is used, this is the certificate hash. This is the value of "thumbprint" value of the certificate you want to use.
+            <para/>
+            Format: hash encoded string. Hex symbols can be space or dash separated.
+            <para/>
+            Example: 0a 0a 0a 0a 0a 0a 0a 0a 0a 0a 0a 0a 0a 0a 0a 0a 0a 0a 0a 0a
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7Binding.CertificateStoreName">
+            <summary>
+            The name of the certificate store. Default is "MY" for the personal store
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7Binding.Exists">
+            <summary>
+            Gets whether the binding exists
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7Binding.BindingProtocol">
+            <summary>
+            Binding protocol. Example: "http", "https", "ftp". Default is http.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Web.IIS7WebsiteAction">
+            <summary>
+            IIS7WebsiteAction
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Web.IIS7WebsiteAction.AddApplication">
+            <summary>
+            AddApplication
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Web.IIS7WebsiteAction.AddVirtualDirectory">
+            <summary>
+            AddVirtualDirectory
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Web.IIS7WebsiteAction.CheckExists">
+            <summary>
+            CheckExists
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Web.IIS7WebsiteAction.CheckVirtualDirectoryExists">
+            <summary>
+            CheckVirtualDirectoryExists
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Web.IIS7WebsiteAction.Create">
+            <summary>
+            Create
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Web.IIS7WebsiteAction.Delete">
+            <summary>
+            Delete
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Web.IIS7WebsiteAction.DeleteVirtualDirectory">
+            <summary>
+            DeleteVirtualDirectory
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Web.IIS7WebsiteAction.ModifyPath">
+            <summary>
+            ModifyPath
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Web.IIS7WebsiteAction.Start">
+            <summary>
+            Start
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Web.IIS7WebsiteAction.Stop">
+            <summary>
+            Stop
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Web.Iis7Website">
+            <summary>
+            Iis7Website
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Web.Iis7Website.InternalExecute">
+            <summary>
+            Executes the logic for this workflow activity
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7Website.Action">
+            <summary>
+            Specifies the action to perform
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7Website.Name">
+            <summary>
+            Sets the name of the Website
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7Website.ApplicationName">
+            <summary>
+            Sets the Application Name
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7Website.ApplicationPhysicalPath">
+            <summary>
+            Sets the ApplicationPhysicalPath
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7Website.ApplicationPath">
+            <summary>
+            Sets the ApplicationPath
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7Website.VirtualDirectoryName">
+            <summary>
+            Sets the VirtualDirectoryName
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7Website.VirtualDirectoryApplicationPath">
+            <summary>
+            Sets the VirtualDirectoryApplicationPath
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7Website.VirtualDirectoryPhysicalPath">
+            <summary>
+            Sets the ApplicationPath
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7Website.Path">
+            <summary>
+            Sets the path.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7Website.AppPool">
+            <summary>
+            Sets the app pool.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7Website.EnabledProtocols">
+            <summary>
+            Sets the Enabled Protocols for the website
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7Website.Port">
+            <summary>
+            Sets the port.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7Website.Force">
+            <summary>
+            Set to true to force the creation of a website, even if it exists.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7Website.SiteId">
+            <summary>
+            Gets the site id. [Output]
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7Website.PhysicalPath">
+            <summary>
+            Gets the site physical path. [Output]
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7Website.Exists">
+            <summary>
+            Gets whether the website exists
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Web.IIS7ApplicationAction">
+            <summary>
+            IIS7ApplicationAction
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Web.IIS7ApplicationAction.Delete">
+            <summary>
+            Delete
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Web.IIS7ApplicationAction.CheckExists">
+            <summary>
+            CheckExists
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Web.Iis7Application">
+            <summary>
+            Iis7Application
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Web.Iis7Application.InternalExecute">
+            <summary>
+            Executes the logic for this workflow activity
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7Application.Action">
+            <summary>
+            Specifies the action to perform
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7Application.Website">
+            <summary>
+            Sets the name of the Website
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7Application.Applications">
+            <summary>
+            ITaskItem of Applications
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Web.Iis7Application.Exists">
+            <summary>
+            Gets whether the application exists
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,1113 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TfsBuildExtensions.Activities.Azure</name>
+    </assembly>
+    <members>
+        <member name="T:TfsBuildExtensions.Activities.Azure.AffinityGroups.GetAffinityGroup">
+            <summary>
+            Get the system properties associated with the specified affinity group.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.BaseAzureActivity">
+            <summary>
+            Provide the base integration to the Azure Service Management API for all activities.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.BaseAzureActivity.InternalExecute">
+            <summary>
+            Prevent inheritance of the method.  Bind required parameters.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.BaseAzureActivity.AzureExecute">
+            <summary>
+            AzureExecute method which Azure-specific activities should implement
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.BaseAzureActivity.RetryCall(System.Action{System.String})">
+            <summary>
+            Execute a call to the Azure service, with retry logic for common failures.
+            </summary>
+            <param name="call">The API call to execute.</param>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.BaseAzureActivity.RetryCall``1(System.Func{System.String,``0})">
+            <summary>
+            Execute a call to the Azure service, with retry logic for common failures.
+            </summary>
+            <typeparam name="TResult">Expected return type of the service call.</typeparam>
+            <param name="call">The API call to execute.</param>
+            <returns>The result of the API call.</returns>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.BaseAzureActivity.SubscriptionId">
+            <summary>
+            Gets or sets the Azure subscription ID.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.BaseAzureActivity.CertificateThumbprintId">
+            <summary>
+            Gets or sets the Azure account certificate.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.BaseAzureActivity.Channel">
+            <summary>
+            Facade over Azure service management interface instance.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.BaseAzureActivity.ManagementCertificate">
+            <summary>
+            Facade to the Azure client certificate loaded from the local store.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.BaseAzureActivity.RemoteChannel">
+            <summary>
+            Gets or sets the Azure REST API Channel.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.AffinityGroups.GetAffinityGroup.AzureExecute">
+            <summary>
+            Connect to an Azure subscription and obtain affinity group information.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.AffinityGroups.GetAffinityGroup.AffinityGroupName">
+            <summary>
+            Gets or sets the affinity group name.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.AffinityGroups.GetAffinityGroup.AffinityGroup">
+            <summary>
+            Gets or sets the group properties.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.AffinityGroups.GetAffinityGroups">
+            <summary>
+            Get a list all of the affinity groups that are associated to a subscription.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.AffinityGroups.GetAffinityGroups.AzureExecute">
+            <summary>
+            Connect to an Azure subscription and obtain a list of affinity groups.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.AffinityGroups.GetAffinityGroups.AffinityGroups">
+            <summary>
+            Gets or sets the location list.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.Certificates.AddCertificate">
+            <summary>
+            Add a certificate to a subscription.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.BaseAzureAsynchronousActivity">
+            <summary>
+            Provide support for Azure asynchronous activities that return an operation identifier for later polling.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.BaseAzureActivity`1">
+            <summary>
+            Provide the base integration to the Azure Service Management API for all activities.
+            </summary>
+            <typeparam name="T">Return type of the activity.</typeparam>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.BaseAzureActivity`1.InternalExecute">
+            <summary>
+            Prevent inheritance of the method.  Bind required parameters.
+            </summary>
+            <returns>A value of the generic type.</returns>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.BaseAzureActivity`1.AzureExecute">
+            <summary>
+            AzureExecute method which Azure-specific activities should implement
+            </summary>
+            <returns>A value of generic return type.</returns>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.BaseAzureActivity`1.RetryCall(System.Action{System.String})">
+            <summary>
+            Execute a call to the Azure service, with retry logic for common failures.
+            </summary>
+            <param name="call">The API call to execute.</param>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.BaseAzureActivity`1.RetryCall``1(System.Func{System.String,``0})">
+            <summary>
+            Execute a call to the Azure service, with retry logic for common failures.
+            </summary>
+            <typeparam name="TResult">Expected return type of the service call.</typeparam>
+            <param name="call">The API call to execute.</param>
+            <returns>The result of the API call.</returns>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.BaseAzureActivity`1.SubscriptionId">
+            <summary>
+            Gets or sets the Azure subscription ID.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.BaseAzureActivity`1.CertificateThumbprintId">
+            <summary>
+            Gets or sets the Azure account certificate.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.BaseAzureActivity`1.Channel">
+            <summary>
+            Facade over Azure service management interface instance.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.BaseAzureActivity`1.ManagementCertificate">
+            <summary>
+            Facade to the Azure client certificate loaded from the local store.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.BaseAzureActivity`1.RemoteChannel">
+            <summary>
+            Gets or sets the Azure REST API Channel.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.BaseAzureAsynchronousActivity.RetrieveOperationId">
+            <summary>
+            Get the Azure operation identifier from the server response headers.
+            </summary>
+            <returns>The operation identifier.</returns>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.Certificates.AddCertificate.AzureExecute">
+            <summary>
+            Connect to an Azure subscription and obtain a certificate.
+            </summary>
+            <returns>The asynchronous operation identifier.</returns>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.Certificates.AddCertificate.CreateFileFromCertificate">
+            <summary>
+            Create an Azure certificate structure from the provided cert.
+            </summary>
+            <returns>An Azure certificate structure.</returns>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.Certificates.AddCertificate.ServiceName">
+            <summary>
+            Gets or sets the Azure service name.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.Certificates.AddCertificate.Certificate">
+            <summary>
+            Gets or sets the certificate to upload
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.Certificates.AddCertificate.Password">
+            <summary>
+            Gets or sets the Azure account certificate algorithm.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.Certificates.RemoveCertificate">
+            <summary>
+            Deletes a certificate from the subscription's certificate store.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.Certificates.RemoveCertificate.AzureExecute">
+            <summary>
+            Connect to an Azure subscription and obtain a certificate.
+            </summary>
+            <returns>The asynchronous operation identifier.</returns>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.Certificates.RemoveCertificate.ServiceName">
+            <summary>
+            Gets or sets the Azure service name.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.Certificates.RemoveCertificate.ThumbprintAlgorithm">
+            <summary>
+            Gets or sets the Azure account certificate algorithm.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.Certificates.GetCertificate">
+            <summary>
+            Get the public data for a certificate.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.Certificates.GetCertificate.AzureExecute">
+            <summary>
+            Connect to an Azure subscription and obtain a certificate.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.Certificates.GetCertificate.ServiceName">
+            <summary>
+            Gets or sets the Azure service name.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.Certificates.GetCertificate.ThumbprintAlgorithm">
+            <summary>
+            Gets or sets the Azure account certificate algorithm.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.Certificates.GetCertificate.Certificate">
+            <summary>
+            Gets or sets the certificate.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.Certificates.GetCertificates">
+            <summary>
+            Get a list of all certificates associated with a hosted service.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.Certificates.GetCertificates.AzureExecute">
+            <summary>
+            Connect to an Azure subscription and obtain a list certificates.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.Certificates.GetCertificates.ServiceName">
+            <summary>
+            Gets or sets the Azure service name.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.Certificates.GetCertificates.Certificates">
+            <summary>
+            Gets or sets the certificate list.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.ChannelManager">
+            <summary>
+            Provide common handling for Azure API channels.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.ChannelManager.InitializeChannel(System.String)">
+            <summary>
+            Initialize Azure Service Management channel.
+            </summary>
+            <param name="certificateThumbprintId">The thumbprint of the certificate for the channel.</param>
+            <returns>An instance of the channel manager.</returns>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.ChannelManager.RetryCall(System.String,System.Action{System.String})">
+            <summary>
+            Execute a call to the Azure service, with retry logic for common failures.
+            </summary>
+            <param name="subscriptionId">The subscription identifier for which to interact with.</param>
+            <param name="call">The API call to execute.</param>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.ChannelManager.RetryCall``1(System.String,System.Func{System.String,``0})">
+            <summary>
+            Execute a call to the Azure service, with retry logic for common failures.
+            </summary>
+            <typeparam name="TResult">Expected return type of the service call.</typeparam>
+            <param name="subscriptionId">The subscription identifier for which to interact with.</param>
+            <param name="call">The API call to execute.</param>
+            <returns>The result of the API call.</returns>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.ChannelManager.CreateChannel">
+            <summary>
+            Connect to the Azure Management Service.
+            </summary>
+            <returns>An instance of the WCF service interface.</returns>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.ChannelManager.FindCertificate(System.String)">
+            <summary>
+            Find the deployment tools certificate by its thumbprint identifier.
+            </summary>
+            <param name="certificateThumbprintId">The thumbprint of the certificate for the channel.</param>
+            <returns>A valid X.509 certificate or null.</returns>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.ChannelManager.ManagementCertificate">
+            <summary>
+            Reference to the Azure client certificate loaded from the local store.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.ChannelManager.Channel">
+            <summary>
+            Azure service management interface instance.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.ChannelManager.ServiceBinding">
+            <summary>
+            WCF binding to the Azure service.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.ChannelManager.ServiceEndpoint">
+            <summary>
+            WCF endpoint connection location.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.Common.GetOperationStatus">
+            <summary>
+            Get the status of an asynchronous operation.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.Common.GetOperationStatus.AzureExecute">
+            <summary>
+            Connect to an Azure subscription and obtain information about a pending operation.
+            </summary>
+            <returns>string</returns>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.Common.GetOperationStatus.OperationId">
+            <summary>
+            Gets or sets the operation id of the Azure API command.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.AzureAsyncOperation">
+            <summary>
+            Composite activity to perform an Azure operation and poll for its results.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.AzureAsyncOperation.#ctor">
+            <summary>
+            Initializes a new instance of the AzureAsyncOperation class.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.AzureAsyncOperation.CreatePollingBody">
+            <summary>
+            Create the structure of the activity for polling Azure for operation status.
+            </summary>
+            <returns>An activity delegate.</returns>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.AzureAsyncOperation.CreateDelayBody">
+            <summary>
+            Create the structure of the activity for pausing between successive polling activities.
+            </summary>
+            <returns>An activity delegate.</returns>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.AzureAsyncOperation.CacheMetadata(System.Activities.NativeActivityMetadata)">
+            <summary>
+            Creates and validates a description of the activity's arguments, variables, child activities, and activity delegates.
+            </summary>
+            <param name="metadata">The activity's metadata that encapsulates the activity's arguments, variables, child activities, and activity delegates.</param>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.AzureAsyncOperation.Execute(System.Activities.NativeActivityContext)">
+            <summary>
+            Initiate the the execution of the Operation activity.
+            </summary>
+            <param name="context">The execution context under which the activity executes.</param>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.AzureAsyncOperation.OnOperationCompleted(System.Activities.NativeActivityContext,System.Activities.ActivityInstance,System.String)">
+            <summary>
+            Respond to the completion callback for the Operation activity.
+            </summary>
+            <param name="context">The activity context.</param>
+            <param name="instance">The current instance of the activity.</param>
+            <param name="result">The result returned by the activity at completion.</param>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.AzureAsyncOperation.OnGetStatusCompleted(System.Activities.NativeActivityContext,System.Activities.ActivityInstance,System.String)">
+            <summary>
+            Respond to the completion callback of the status polling activity.
+            </summary>
+            <param name="context">The activity context.</param>
+            <param name="instance">The current instance of the activity.</param>
+            <param name="result">The result of the status inquiry.</param>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.AzureAsyncOperation.OnDelayCompleted(System.Activities.NativeActivityContext,System.Activities.ActivityInstance)">
+            <summary>
+            Respond to the completion callback for the Delay activity.
+            </summary>
+            <param name="context">The activity context.</param>
+            <param name="instance">The current instance of the activity.</param>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.AzureAsyncOperation.OnOperationFault(System.Activities.NativeActivityFaultContext,System.Exception,System.Activities.ActivityInstance)">
+            <summary>
+            Respond to the fault callback, used for all scheduled activities.
+            </summary>
+            <param name="context">The activity context.</param>
+            <param name="exception">An exception which was thrown by the activity.</param>
+            <param name="instance">The current instance of the activity.</param>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.AzureAsyncOperation.LogBuildError(System.Activities.NativeActivityContext,System.String)">
+            <summary>
+            Log an error message to the build tracking participant.
+            </summary>
+            <param name="context">The current activity context.</param>
+            <param name="message">The message to log.</param>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.AzureAsyncOperation.LogBuildMessage(System.Activities.NativeActivityContext,System.String,Microsoft.TeamFoundation.Build.Client.BuildMessageImportance)">
+            <summary>
+            Log a message to the build tracking participant.
+            </summary>
+            <param name="context">The current activity context.</param>
+            <param name="message">The message to log.</param>
+            <param name="importance">The importance level of the message.</param>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.AzureAsyncOperation.PollingEndTime">
+            <summary>
+            Gets or sets the time at which polling must end.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.AzureAsyncOperation.OperationId">
+            <summary>
+            Gets or sets the Azure aynchronous operation ID.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.AzureAsyncOperation.AzureActivityExceptionCaught">
+            <summary>
+            Gets or sets whether an exception occured during execution of the Azure activity or polling.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.AzureAsyncOperation.Operation">
+            <summary>
+            The Azure operation to perform and monitor.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.AzureAsyncOperation.Success">
+            <summary>
+            The activity to perform if the operation is successful.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.AzureAsyncOperation.Failure">
+            <summary>
+            The activity to perform if the operation is not successful.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.AzureAsyncOperation.SubscriptionId">
+            <summary>
+            Gets or sets the Azure subscription ID.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.AzureAsyncOperation.CertificateThumbprintId">
+            <summary>
+            Gets or sets the Azure account certificate.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.AzureAsyncOperation.TimeoutSeconds">
+            <summary>
+            Gets or sets the maximum time to wait for the Operation to complete.
+            </summary>
+            <remarks>This timeout will be a minimum of 30 seconds, and a default of 5 minutes.</remarks>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.AzureAsyncOperation.PollingInterval">
+            <summary>
+            Gets or sets the interval between polling retries for the Operation status.
+            </summary>
+            <remarks>This interval will be between 1 and 30 seconds, and a default of 15 seconds.</remarks>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.AzureAsyncOperation.PollingBody">
+            <summary>
+            Gets or sets the body of the internal status polling activities.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.AzureAsyncOperation.DelayBody">
+            <summary>
+            Gets or sets the body of the internal delay activity.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.AzureOperationDesigner">
+            <summary>
+            Designer implementation for custom workflow activity.
+            </summary>
+            <summary>
+            AzureOperationDesigner
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.AzureOperationDesigner.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.ChangeConfigurationSettings">
+            <summary>
+            Composite activity to change the configuration settings of a deployed service.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.ChangeConfigurationSettings.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.RemoveDeployment">
+            <summary>
+            Composite activity to remove an existing deployment from an Azure Hosted Service.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.RemoveDeployment.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.StartOrStopDeployment">
+            <summary>
+            Composite activity to start or stop a deployed Azure service.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.StartOrStopDeployment.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.Extended.Utility">
+            <summary>
+            Utility
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.HostedServices.ChangeDeploymentConfigurationAction">
+            <summary>
+            Possible actions for the ChangeDeploymentConfiguration activity.
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Azure.HostedServices.ChangeDeploymentConfigurationAction.ChangeByDeploymentName">
+            <summary>
+            Changes the deployment defined by the unique deployment name.
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Azure.HostedServices.ChangeDeploymentConfigurationAction.ChangeBySlot">
+            <summary>
+            Changes the deployment defined by the service name and slot.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.HostedServices.ChangeDeploymentConfiguration">
+            <summary>
+            Initiate a change to the deployment configuration.
+            <b>Valid Action values are:</b>
+            <para><i>ChangeByDeploymentName</i></para>
+            <para><i>ChangeBySlot</i></para>
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Azure.HostedServices.ChangeDeploymentConfiguration.action">
+            <summary>
+            The action to perform
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.HostedServices.ChangeDeploymentConfiguration.AzureExecute">
+            <summary>
+            Connect to an Azure subscription and change the configuration of a deployment.
+            </summary>
+            <returns>The asynchronous operation identifier.</returns>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.ChangeDeploymentConfiguration.Action">
+            <summary>
+            The task to perform.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.ChangeDeploymentConfiguration.Slot">
+            <summary>
+            Gets or sets the Azure deployment slot identifier.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.ChangeDeploymentConfiguration.ServiceName">
+            <summary>
+            Gets or sets the Azure service name.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.ChangeDeploymentConfiguration.DeploymentName">
+            <summary>
+            Gets or sets the Azure deployment name.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.ChangeDeploymentConfiguration.ConfigurationFilePath">
+            <summary>
+            Gets or sets the configuration file path.
+            This parameter should specifiy a .cscfg file on disk.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.HostedServices.RebootRoleInstanceAction">
+            <summary>
+            Possible actions for the RebootRoleInstance activity.
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Azure.HostedServices.RebootRoleInstanceAction.RebootByInstanceName">
+            <summary>
+            Reboots the deployment defined by the unique deployment name.
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Azure.HostedServices.RebootRoleInstanceAction.RebootBySlot">
+            <summary>
+            Reboots the deployment defined by the service name and slot.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.HostedServices.RebootRoleInstance">
+            <summary>
+            Request a reboot of a role instance that is running in a deployment.
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Azure.HostedServices.RebootRoleInstance.action">
+            <summary>
+            The action to perform
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.HostedServices.RebootRoleInstance.AzureExecute">
+            <summary>
+            Connect to an Azure subscription and reboot a deployment.
+            </summary>
+            <returns>The asynchronous operation identifier.</returns>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.RebootRoleInstance.Action">
+            <summary>
+            The task to perform.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.RebootRoleInstance.Slot">
+            <summary>
+            Gets or sets the Azure deployment slot identifier.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.RebootRoleInstance.ServiceName">
+            <summary>
+            Gets or sets the Azure service name.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.RebootRoleInstance.DeploymentName">
+            <summary>
+            Gets or sets the Azure deployment name.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.RebootRoleInstance.InstanceName">
+            <summary>
+            Gets or sets the Azure role instance name.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.HostedServices.ReimageRoleInstanceAction">
+            <summary>
+            Possible actions for the ReimageRoleInstance activity.
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Azure.HostedServices.ReimageRoleInstanceAction.ReimageByInstanceName">
+            <summary>
+            Reimage the deployment defined by the unique deployment name.
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Azure.HostedServices.ReimageRoleInstanceAction.ReimageBySlot">
+            <summary>
+            Reimage the deployment defined by the service name and slot.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.HostedServices.ReimageRoleInstance">
+            <summary>
+            Request a reboot of a role instance that is running in a deployment.
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Azure.HostedServices.ReimageRoleInstance.action">
+            <summary>
+            The action to perform
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.HostedServices.ReimageRoleInstance.AzureExecute">
+            <summary>
+            Connect to an Azure subscription and reimage a deployment.
+            </summary>
+            <returns>The asynchronous operation identifier.</returns>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.ReimageRoleInstance.Action">
+            <summary>
+            The task to perform.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.ReimageRoleInstance.Slot">
+            <summary>
+            Gets or sets the Azure deployment slot identifier.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.ReimageRoleInstance.ServiceName">
+            <summary>
+            Gets or sets the Azure service name.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.ReimageRoleInstance.DeploymentName">
+            <summary>
+            Gets or sets the Azure deployment name.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.ReimageRoleInstance.InstanceName">
+            <summary>
+            Gets or sets the Azure role instance name.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.HostedServices.SwapDeployment">
+            <summary>
+            Execute a swap operation between the staging and production slots.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.HostedServices.SwapDeployment.AzureExecute">
+            <summary>
+            Connect to an Azure subscription and execute a VIP swap.
+            </summary>
+            <returns>The asynchronous operation identifier.</returns>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.SwapDeployment.ServiceName">
+            <summary>
+            Gets or sets the Azure service name.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.SwapDeployment.StagingDeploymentName">
+            <summary>
+            Gets or sets the Azure staging deployment name.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.SwapDeployment.ProductionDeploymentName">
+            <summary>
+            Gets or sets the Azure production deployment name.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.HostedServices.GetHostedServiceProperties">
+            <summary>
+            Get the properties of a defined Azure service.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.HostedServices.GetHostedServiceProperties.AzureExecute">
+            <summary>
+            Connect to an Azure subscription and obtain service properties.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.GetHostedServiceProperties.ServiceName">
+            <summary>
+            Gets or sets the Azure service name.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.GetHostedServiceProperties.ServiceProperties">
+            <summary>
+            Gets or sets the service properties.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.HostedServices.GetHostedServices">
+            <summary>
+            Get a list of hosted services for a subscription.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.HostedServices.GetHostedServices.AzureExecute">
+            <summary>
+            Connect to an Azure subscription and obtain its service list.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.GetHostedServices.ServiceList">
+            <summary>
+            Gets or sets the deployment context.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.HostedServices.UpgradeMode">
+            <summary>
+            UpgradeMode enumeration
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Azure.HostedServices.UpgradeMode.Auto">
+            <summary>
+            The Windows Azure platform will automatically apply the update to each Upgrade Domain in sequence.
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Azure.HostedServices.UpgradeMode.Manual">
+            <summary>
+            WalkUpgradeDomain must be called to apply the update
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.HostedServices.UpgradeDeployment">
+            <summary>
+            Upgrade an existing deployment for a package which has already been uploaded.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.HostedServices.UpgradeDeployment.AzureExecute">
+            <summary>
+            Connect to an Azure subscription and upgrade an existing deployment.
+            </summary>
+            <returns>The asynchronous operation identifier.</returns>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.UpgradeDeployment.ServiceName">
+            <summary>
+            Gets or sets the Azure service name.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.UpgradeDeployment.RoleName">
+            <summary>
+            Gets or sets the name of the role to upgrade (OPTIONAL).
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.UpgradeDeployment.PackageUrl">
+            <summary>
+            Gets or sets the package location.
+            This parameter should have the path or URI to a .cspkg in blob storage whose storage account is part of the same subscription/project.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.UpgradeDeployment.ConfigurationFilePath">
+            <summary>
+            Gets or sets the configuration file path.
+            This parameter should specifiy a .cscfg file on disk.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.UpgradeDeployment.DeploymentLabel">
+            <summary>
+            Gets or sets the label name for the new deployment.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.UpgradeDeployment.DeploymentName">
+            <summary>
+            Gets or sets the Azure deployment name.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.HostedServices.UploadPackageToBlobStorage">
+            <summary>
+            Upload a packaged service to blob storage as a precursor to deployment.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.HostedServices.UploadPackageToBlobStorage.AzureExecute">
+            <summary>
+            Connect to an Azure subscription and upload a package to blob storage.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.UploadPackageToBlobStorage.StorageServiceName">
+            <summary>
+            Gets or sets the Azure storage service name.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.UploadPackageToBlobStorage.StorageKeys">
+            <summary>
+            Gets or sets the storage service keys.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.UploadPackageToBlobStorage.LocalPackagePath">
+            <summary>
+            Gets or sets the package location.
+            This parameter should have the path or URI to a .cspkg in blob storage whose storage account is part of the same subscription/project.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.UploadPackageToBlobStorage.PackageUrl">
+            <summary>
+            Gets or sets the operation id of the Azure API command.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.HostedServices.NewDeployment">
+            <summary>
+            Create a new deployment for a package which has already been uploaded.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.HostedServices.NewDeployment.AzureExecute">
+            <summary>
+            Connect to an Azure subscription create a new deployment.
+            </summary>
+            <returns>The asynchronous operation identifier.</returns>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.NewDeployment.Slot">
+            <summary>
+            Gets or sets the Azure deployment slot identifier.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.NewDeployment.ServiceName">
+            <summary>
+            Gets or sets the Azure service name.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.NewDeployment.PackageUrl">
+            <summary>
+            Gets or sets the package location.
+            This parameter should have the path or URI to a .cspkg in blob storage whose storage account is part of the same subscription/project.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.NewDeployment.ConfigurationFilePath">
+            <summary>
+            Gets or sets the configuration file path.
+            This parameter should specifiy a .cscfg file on disk.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.NewDeployment.DeploymentLabel">
+            <summary>
+            Gets or sets the label name for the new deployment.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.NewDeployment.DeploymentName">
+            <summary>
+            Gets or sets the Azure deployment name.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.HostedServices.RemoveDeployment">
+            <summary>
+            Remove a pre-existing deployment from a slot.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.HostedServices.RemoveDeployment.AzureExecute">
+            <summary>
+            Connect to an Azure subscription and remove the named deployment.
+            </summary>
+            <returns>The asynchronous operation identifier.</returns>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.RemoveDeployment.Slot">
+            <summary>
+            Gets or sets the Azure deployment slot identifier.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.RemoveDeployment.ServiceName">
+            <summary>
+            Gets or sets the Azure service name.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.HostedServices.SetDeploymentStatus">
+            <summary>
+            Change the service status for a deployed service.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.HostedServices.SetDeploymentStatus.AzureExecute">
+            <summary>
+            Connect to an Azure subscription and set the deployment status.
+            </summary>
+            <returns>The asynchronous operation identifier.</returns>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.SetDeploymentStatus.Slot">
+            <summary>
+            Gets or sets the Azure deployment slot identifier.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.SetDeploymentStatus.ServiceName">
+            <summary>
+            Gets or sets the Azure service name.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.SetDeploymentStatus.ServiceStatus">
+            <summary>
+            Gets or sets the status of the Azure service.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.HostedServices.GetHostedService">
+            <summary>
+            Get the context for an Azure service within a subscription.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.HostedServices.GetHostedService.AzureExecute">
+            <summary>
+            Connect to an Azure subscription and obtain service information.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.GetHostedService.ServiceName">
+            <summary>
+            Gets or sets the Azure service name.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.GetHostedService.ServiceContext">
+            <summary>
+            Gets or sets the service context.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.HostedServices.GetDeployment">
+            <summary>
+            Get the deployment context for a currently running service.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.HostedServices.GetDeployment.AzureExecute">
+            <summary>
+            Connect to an Azure subscription and obtain deployment information.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.GetDeployment.Slot">
+            <summary>
+            Gets or sets the Azure deployment slot identifier.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.GetDeployment.ServiceName">
+            <summary>
+            Gets or sets the Azure service name.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.HostedServices.GetDeployment.DeploymentContext">
+            <summary>
+            Gets or sets the deployment context.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.Locations.GetLocations">
+            <summary>
+            Get a list all of the data center locations that are valid for a subscription.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.Locations.GetLocations.AzureExecute">
+            <summary>
+            Connect to an Azure subscription and obtain a list of locations.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.Locations.GetLocations.Locations">
+            <summary>
+            Gets or sets the location list.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.OperatingSystems.GetOSFamilies">
+            <summary>
+            Get a list of the versions of the guest operating system families that are currently available in Windows Azure.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.OperatingSystems.GetOSFamilies.AzureExecute">
+            <summary>
+            Connect to an Azure subscription and obtain a list of operating systems.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.OperatingSystems.GetOSFamilies.OperatingSystemFamilies">
+            <summary>
+            Gets or sets the operating system family list.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.OperatingSystems.GetOSVersions">
+            <summary>
+            Get a list of the versions of the guest operating system that are currently available in Windows Azure.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.OperatingSystems.GetOSVersions.AzureExecute">
+            <summary>
+            Connect to an Azure subscription and obtain a list of operating systems.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.OperatingSystems.GetOSVersions.OperatingSystems">
+            <summary>
+            Gets or sets the operating system list.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.StorageAccounts.GetStorageProperties">
+            <summary>
+            Get the properties of a storage service account.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.StorageAccounts.GetStorageProperties.AzureExecute">
+            <summary>
+            Connect to an Azure subscription and obtain storage service properties.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.StorageAccounts.GetStorageProperties.ServiceName">
+            <summary>
+            Gets or sets the Azure service name.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.StorageAccounts.GetStorageProperties.ServiceProperties">
+            <summary>
+            Gets or sets the storage service properties.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.StorageAccounts.NewStorageKey">
+            <summary>
+            Create storage keys to use with an Azure storage service account.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.StorageAccounts.NewStorageKey.AzureExecute">
+            <summary>
+            Connect to an Azure subscription and obtain storage service keys.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.StorageAccounts.NewStorageKey.ServiceName">
+            <summary>
+            Gets or sets the Azure service name.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.StorageAccounts.NewStorageKey.KeyType">
+            <summary>
+            Gets or sets the Azure key type to regenerate.
+            Can be either Primary or Secondary.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.StorageAccounts.NewStorageKey.StorageKeys">
+            <summary>
+            Gets or sets the storage service keys.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.StorageAccounts.GetStorageAccounts">
+            <summary>
+            Get a list of storage services for a subscription.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.StorageAccounts.GetStorageAccounts.AzureExecute">
+            <summary>
+            Connect to an Azure subscription and obtain a list of storage services.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.StorageAccounts.GetStorageAccounts.StorageServices">
+            <summary>
+            Gets or sets the storage service list.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Azure.StorageAccounts.GetStorageKeys">
+            <summary>
+            Get the storage keys for a service.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.Azure.StorageAccounts.GetStorageKeys.AzureExecute">
+            <summary>
+            Connect to an Azure subscription and obtain storage service keys.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.StorageAccounts.GetStorageKeys.ServiceName">
+            <summary>
+            Gets or sets the Azure service name.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.Azure.StorageAccounts.GetStorageKeys.StorageKeys">
+            <summary>
+            Gets or sets the storage service keys.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,310 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TfsBuildExtensions.Activities.AWS</name>
+    </assembly>
+    <members>
+        <member name="T:TfsBuildExtensions.Activities.AWS.Extended.ServiceExtensions">
+            <summary>
+            Extension methods for interacting with the Amazon AWS SDK.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.AWS.Extended.ServiceExtensions.ToAmazonDateTime(System.DateTime)">
+            <summary>
+            Extension method for DateTime to output XSD 
+            </summary>
+            <param name="inputDate">The DateTime instance.</param>
+            <returns>A formatted string represenation of the DateTime.</returns>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.AWS.BaseAmazonActivity">
+            <summary>
+            Provide the base activity arguments and channel setup for interacting with AWS.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.AWS.BaseAmazonActivity.InternalExecute">
+            <summary>
+            Prevent inheritance of the method.  Bind required parameters.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.AWS.BaseAmazonActivity.AmazonExecute">
+            <summary>
+            AmazonExecute method which Amazon-specific activities should implement
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.AWS.BaseAmazonActivity.AccessKey">
+            <summary>
+            Gets or sets the Amazon account access key.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.AWS.BaseAmazonActivity.SecretKey">
+            <summary>
+            Gets or sets the Amazon account secret key.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.AWS.BaseAmazonActivity.EC2Client">
+            <summary>
+            Gets or sets the Amazon web services client
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.AWS.EC2.AssociateAddress">
+            <summary>
+            Activity to associate an public IP address with an EC2 instance.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.AWS.EC2.AssociateAddress.AmazonExecute">
+            <summary>
+            Connect to an EC2 instance and associate a public IP address with it.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.AWS.EC2.AssociateAddress.InstanceId">
+            <summary>
+            Gets or sets the instance identifier.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.AWS.EC2.AssociateAddress.PublicAddress">
+            <summary>
+            Gets or sets the static IP address to associate.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.AWS.EC2.ProductionDescriptionType">
+            <summary>
+            Strongly typed names for product descriptions, kind-of
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.AWS.EC2.ProductionDescriptionType.Windows">
+            <summary>
+            A Windows-based AMI.
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.AWS.EC2.ProductionDescriptionType.Linux">
+            <summary>
+            A generic Linux-based AMI.
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.AWS.EC2.ProductionDescriptionType.Suse">
+            <summary>
+            A SUSE Linux AMI.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.AWS.EC2.DescribeAddresses">
+            <summary>
+            Obtain a list of EC2 instances associated with a public IP address.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.AWS.EC2.DescribeAddresses.AmazonExecute">
+            <summary>
+            Connect to an AWS subscription and obtain information about instances.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.AWS.EC2.DescribeAddresses.PublicAddress">
+            <summary>
+            Gets or sets the static IP address to query.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.AWS.EC2.DescribeAddresses.Addresses">
+            <summary>
+            Gets or sets the list of instance reservations.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.AWS.EC2.DescribeImages">
+            <summary>
+            Discover the AMI images associated with an owner.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.AWS.EC2.DescribeImages.AmazonExecute">
+            <summary>
+            Query EC2 for the list of owned AMIs.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.AWS.EC2.DescribeImages.Owner">
+            <summary>
+            Gets or sets the AMI owner to find images for.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.AWS.EC2.DescribeImages.Images">
+            <summary>
+            Gets or sets the list of owned images.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.AWS.EC2.DescribeSpotInstanceRequests">
+            <summary>
+            Query the status of a series of spot instance requests.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.AWS.EC2.DescribeSpotInstanceRequests.AmazonExecute">
+            <summary>
+            Query EC2 for spot request information.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.AWS.EC2.DescribeSpotInstanceRequests.SpotRequests">
+            <summary>
+            Gets or sets the list of spot requests to obtain information for.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.AWS.EC2.DescribeSpotInstanceRequests.UpdatedSpotRequests">
+            <summary>
+            Gets or sets the list of status information items.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.AWS.EC2.DescribeSpotPriceHistory">
+            <summary>
+            Get spot pricing history.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.AWS.EC2.DescribeSpotPriceHistory.AmazonExecute">
+            <summary>
+            Query EC2 for the spot pricing history for a specified instance type.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.AWS.EC2.DescribeSpotPriceHistory.InstanceType">
+            <summary>
+            Gets or sets the type of instance desired.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.AWS.EC2.DescribeSpotPriceHistory.StartTime">
+            <summary>
+            Gets or sets the start date of the request.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.AWS.EC2.DescribeSpotPriceHistory.EndTime">
+            <summary>
+            Gets or sets the end date of the request.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.AWS.EC2.DescribeSpotPriceHistory.PriceHistory">
+            <summary>
+            Gets or sets the spot price history.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.AWS.EC2.GetCurrentSpotPrice">
+            <summary>
+            Get the spot price for a specified instance type.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.AWS.EC2.GetCurrentSpotPrice.AmazonExecute">
+            <summary>
+            Query the market for product spot pricing.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.AWS.EC2.GetCurrentSpotPrice.InstanceType">
+            <summary>
+            Gets or sets the type of instance desired.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.AWS.EC2.GetCurrentSpotPrice.ProductDescription">
+            <summary>
+            Gets or sets the type of product desired.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.AWS.EC2.GetCurrentSpotPrice.CurrentSpotPrice">
+            <summary>
+            Gets or sets the current spot price.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.AWS.EC2.SpotRequestType">
+            <summary>
+            Strongly typed names for spot requests, kind-of
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.AWS.EC2.SpotRequestType.OneTime">
+            <summary>
+            Request a single spot instance.
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.AWS.EC2.SpotRequestType.Persistent">
+            <summary>
+            Make a standing request for spot instances.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.AWS.EC2.DescribeInstances">
+            <summary>
+            Get reservation information for an instance.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.AWS.EC2.DescribeInstances.AmazonExecute">
+            <summary>
+            Connect to an Amazon subscription and obtain information about instance reservations.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.AWS.EC2.DescribeInstances.InstanceIds">
+            <summary>
+            Gets or sets the instance IDs to retrieve the description of.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.AWS.EC2.DescribeInstances.Reservations">
+            <summary>
+            Gets or sets the list of instance reservations.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.AWS.EC2.RequestSpotInstances">
+            <summary>
+            Create an instance on the EC2 spot market.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.AWS.EC2.RequestSpotInstances.AmazonExecute">
+            <summary>
+            Create a new instance using the Amazon spot market.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.AWS.EC2.RequestSpotInstances.InstanceCount">
+            <summary>
+            Gets or sets the number of instances to request.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.AWS.EC2.RequestSpotInstances.SpotPrice">
+            <summary>
+            Gets or sets the maximum price you are willing to pay.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.AWS.EC2.RequestSpotInstances.RequestType">
+            <summary>
+            Gets or sets the type of spot request.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.AWS.EC2.RequestSpotInstances.ImageId">
+            <summary>
+            Gets or sets the name of the AMI image.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.AWS.EC2.RequestSpotInstances.InstanceType">
+            <summary>
+            Gets or sets the type of instance desired.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.AWS.EC2.RequestSpotInstances.SecurityGroupName">
+            <summary>
+            Gets or sets the name of the security group to associate the launch with.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.AWS.EC2.RequestSpotInstances.ValidDurationMinutes">
+            <summary>
+            Gets or sets the duration of the spot request starting at the current time.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.AWS.EC2.RequestSpotInstances.SpotRequests">
+            <summary>
+            Gets or sets the list of instance reservations.
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.AWS.EC2.TerminateInstances">
+            <summary>
+            Terminate an active instance from EC2.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.AWS.EC2.TerminateInstances.AmazonExecute">
+            <summary>
+            Terminate an active EC2 instance.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.AWS.EC2.TerminateInstances.InstanceIds">
+            <summary>
+            Gets or sets the instance IDs to terminate.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.AWS.EC2.TerminateInstances.InstanceChanges">
+            <summary>
+            Gets or sets the list of instance changes.
+            </summary>
+        </member>
+    </members>
+</doc>

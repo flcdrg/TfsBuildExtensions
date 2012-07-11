@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TfsBuildExtensions.Activities.StyleCop</name>
+    </assembly>
+    <members>
+        <member name="T:TfsBuildExtensions.Activities.CodeQuality.StyleCop">
+            <summary>
+            Wraps the StyleCopConsole class to provide a mechanism for scanning files for StyleCop compliance.
+            </summary>
+            <example>
+            <code lang="xml"><![CDATA[
+            <Sequence DisplayName="TFSBuildExtensions StyleCop Sequence" sap:VirtualizedContainerService.HintSize="818,146">
+            <Sequence.Variables>
+            <Variable x:TypeArguments="x:Int32" Name="StyleCopViolationCount" />
+            </Sequence.Variables>
+            <tac1:StyleCop AdditionalAddInPaths="{x:Null}" CacheResults="{x:Null}" FailBuildOnError="{x:Null}" MaximumViolationCount="{x:Null}" Succeeded="{x:Null}" TreatViolationsErrorsAsWarnings="{x:Null}" TreatWarningsAsErrors="{x:Null}" ForceFullAnalysis="True" sap:VirtualizedContainerService.HintSize="200,22" LogExceptionStack="True" LogFile="[SourcesDirectory + &quot;\StyleCopLog.txt&quot;]" SettingsFile="[SourcesDirectory + &quot;\Settings.StyleCop&quot;]" ShowOutput="True" SourceFiles="[New String() {SourcesDirectory}]" ViolationCount="[StyleCopViolationCount]" XmlOutputFile="[SourcesDirectory + &quot;\StyleCopviolations.xml&quot;]" />
+            </Sequence>
+            ]]></code>    
+            </example>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.CodeQuality.StyleCop.DefaultViolationLimit">
+            <summary>
+            The default maximum number of violations that can be discovered
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.CodeQuality.StyleCop.exitCode">
+            <summary>
+            The status of the analysis
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.CodeQuality.StyleCop.violations">
+            <summary>
+            The files that vioaltions encountered
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.CodeQuality.StyleCop.violationLimit">
+            <summary>
+            The maximum violation count
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.CodeQuality.StyleCop.InternalExecute">
+            <summary>
+            Executes the logic for this workflow activity
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.StyleCop.MaximumViolationCount">
+            <summary>
+            Sets the maximum violation count before scanning is halted.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.StyleCop.ViolationCount">
+            <summary>
+            Gets the number of violations found.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.StyleCop.ShowOutput">
+            <summary>
+            Sets a value indicating whether to show names of files scanned to the build log
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.StyleCop.Succeeded">
+            <summary>
+            Gets whether the scan succeeded.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.StyleCop.CacheResults">
+            <summary>
+            Sets a value indicating whether StyleCop should write cache files to disk after performing an analysis. Default is false.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.StyleCop.ForceFullAnalysis">
+            <summary>
+            Sets a value indicating whether StyleCop should ignore cached results and perform a clean analysis. 
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.StyleCop.XmlOutputFile">
+            <summary>
+            Sets the name for the XML log file produced by the StyleCop runner
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.StyleCop.LogFile">
+            <summary>
+            Sets the text log file that list the violation 
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.StyleCop.SourceFiles">
+            <summary>
+            Sets the source files path or list of specific files
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.StyleCop.SettingsFile">
+            <summary>
+            Sets the path to the settings file that defines the rules
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.StyleCop.AdditionalAddInPaths">
+            <summary>
+            Set the location of any custom addins
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.StyleCop.TreatViolationsErrorsAsWarnings">
+            <summary>
+            Set to true to treat all stylecop violations as warnings
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<EnvironmentSettings>
+  <Images></Images>
+  <Templates></Templates>
+  <Parameters>
+    <ServerPath>"$\_SelectedTeamProject_\BuildNotes"</ServerPath>
+  </Parameters>
+</EnvironmentSettings>

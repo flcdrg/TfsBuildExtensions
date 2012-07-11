@@ -1,0 +1,63 @@
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="$(MSBuildExtensionsPath)\ExtensionPack\4.0\MSBuild.ExtensionPack.tasks"/>
+    <PropertyGroup>
+        <ReleaseVersion>June 2012</ReleaseVersion>
+        <Configuration>Release|Any CPU</Configuration>
+        <VisualStudioVersion>11.0</VisualStudioVersion>
+    </PropertyGroup>
+    <ItemGroup>
+        <FilesToCheckout Include="$(CustomActivitiesFolder)\TFSBuildExtensions.*"/>
+    </ItemGroup>
+
+    <Target Name="Package" DependsOnTargets="PrepareCodePlex;Package10Activities;Package11Activities;PackageTFSBuildManager"/>
+
+    <Target Name="PrepareCodePlex">
+        <MakeDir Directories="CustomActivities\MAIN\Source\Output"/>
+        <MakeDir Directories="CodePlex"/>
+        <MSBuild.ExtensionPack.FileSystem.Folder TaskAction="RemoveContent" Path="CodePlex"/>
+        <MakeDir Directories="CodePlex\Code Activities\VS11"/>
+        <MakeDir Directories="CodePlex\Code Activities\VS2010"/>
+        <MakeDir Directories="CodePlex\TFS Build Manager\Windows Application"/>
+        <MakeDir Directories="CodePlex\TFS Build Manager\VS2010 Extension"/>
+    </Target>
+
+    <Target Name="Package10Activities">
+        <MSBuild Projects="CustomActivities\MAIN\Source\Build\Build2010.proj" Targets="Package" Properties="VisualStudioVersion=$(VisualStudioVersion)"/>
+        <ItemGroup>
+            <Binaries10 Include="CustomActivities\MAIN\Source\BuildBinaries\*.*"/>
+        </ItemGroup>
+        <Copy SourceFiles="@(Binaries10)" DestinationFolder="CodePlex\Code Activities\VS2010"/>
+    </Target>
+
+    <Target Name="Package11Activities">
+        <MSBuild Projects="CustomActivities\MAIN\Source\Build\Build.proj" Targets="Package" Properties="VisualStudioVersion=$(VisualStudioVersion)"/>
+        <ItemGroup>
+            <Binaries11 Include="CustomActivities\MAIN\Source\BuildBinaries\*.*"/>
+        </ItemGroup>
+        <Copy SourceFiles="@(Binaries11)" DestinationFolder="CodePlex\Code Activities\VS11"/>
+    </Target>
+
+    <Target Name="PackageTFSBuildManager">
+        <MSBuild Projects="TFSBuildManager\MAIN\Source\Build\Build.proj" Targets="Package" Properties="VisualStudioVersion=$(VisualStudioVersion)"/>
+        <ItemGroup>
+            <TFSBM10Win Include="TFSBuildManager\MAIN\Source\BuildBinaries\TFSBuildManager.Application.*;
+                                 TFSBuildManager\MAIN\Source\BuildBinaries\TFSBuildManager.Controls.*;
+                                 TFSBuildManager\MAIN\Source\BuildBinaries\TFSBuildManager.Repository.*;
+                                 TFSBuildManager\MAIN\Source\BuildBinaries\TFSBuildManager.Views.*"/>
+        </ItemGroup>
+        <Copy SourceFiles="TFSBuildManager\MAIN\Source\BuildBinaries\TFSBuildManager.Package.vsix" DestinationFolder="CodePlex\TFS Build Manager\VS2010 Extension"/>
+        <Copy SourceFiles="TFSBuildManager\MAIN\Source\BuildBinaries\TFSBuildManager.Package.vsix" DestinationFolder="CodePlex\TFS Build Manager\VS2010 Extension"/>
+        <Copy SourceFiles="@(TFSBM10Win)" DestinationFolder="CodePlex\TFS Build Manager\Windows Application"/>
+        <Copy SourceFiles="CustomActivities\MAIN\Source\Build\Documentation\Help\TFS Build Extensions Help.chm" DestinationFolder="CodePlex"/>
+        <Copy SourceFiles="TFSBuildManager\MAIN\Source\BuildBinaries\License.rtf" DestinationFolder="CodePlex"/>
+    </Target>
+
+    <Target Name="CreateZips">
+        <MakeDir Directories="CodePlex"/>
+        <MSBuild.ExtensionPack.FileSystem.Folder TaskAction="RemoveContent" Path="CodePlex"/>
+        <ItemGroup>
+            <Binaries Include="..\BuildBinaries\*.*"/>
+        </ItemGroup>
+        <MSBuild.ExtensionPack.Compression.DNZip TaskAction="Create" RemoveRoot="..\BuildBinaries" CompressFiles="@(Binaries)" ZipFileName="CodePlex\Community TFS Build Extensions $(ReleaseVersion).zip"/>
+    </Target>
+</Project>

@@ -1,0 +1,232 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TfsBuildExtensions.TfsUtilities</name>
+    </assembly>
+    <members>
+        <member name="T:TfsBuildExtensions.TfsUtilities.TfsUriType">
+            <summary>
+            Enumeration of TFS Uri types.
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.TfsUtilities.TfsUriType.ProjectCollection">
+            <summary>
+            Project Collection Uri
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.TfsUtilities.TfsUriType.BuildServer">
+            <summary>
+            Build Server Uri
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.TfsUtilities.TfsUriType.Build">
+            <summary>
+            Individual build Uri
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.TfsUtilities.TfsUriType.BuildDefinition">
+            <summary>
+            Build definition Uri
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.TfsUtilities.TfsUriType.Service">
+            <summary>
+            TF Service Uri
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.TfsUtilities.ArgumentValidation">
+            <summary>
+            Provides basic validation. Throws an exception if validation fails.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.TfsUtilities.ArgumentValidation.ValidateObjectIsNotNull(System.Object,System.String)">
+            <summary>
+            Validates that an object is not null. 
+            </summary>
+            <param name="argumentValue">Value of the argument</param>
+            <param name="argumentName">Name of the argument</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="M:TfsBuildExtensions.TfsUtilities.ArgumentValidation.ValidateStringIsNotEmpty(System.String,System.String)">
+            <summary>
+            Validates that a string argument has a value.
+            </summary>
+            <param name="argumentValue">Value of the argument</param>
+            <param name="argumentName">Name of the argument</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:TfsBuildExtensions.TfsUtilities.ArgumentValidation.ValidateTfsUri(System.Uri,System.String,TfsBuildExtensions.TfsUtilities.TfsUriType)">
+            <summary>
+            Validates that a supplied URI has a value and the proper format and scheme.  
+            </summary>
+            <param name="argumentValue">Value of the argument</param>
+            <param name="argumentName">Name of the argument</param>
+            <param name="uriType">Type of Uri to validate</param>
+            <exception cref="T:System.ArgumentException"/>
+            <exception cref="T:System.ArgumentNullException"/>
+        </member>
+        <member name="T:TfsBuildExtensions.TfsUtilities.Build">
+            <summary>
+            Performs tasks related to TF Build.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.TfsUtilities.Build.AddWorkspaceMapping(Microsoft.TeamFoundation.Build.Client.IBuildDefinition,System.String,System.String)">
+            <summary>
+            Adds a new workspace mapping to an existing build definition
+            </summary>
+            <param name="buildDefinition">Build definition for the new mapping</param>
+            <param name="localItem">Local path for the mapping</param>
+            <param name="serverItem">Server path for the mapping</param>
+            <returns>The created workspace mapping</returns>
+            <remarks>The build definition is not saved after the mapping is added.</remarks>
+        </member>
+        <member name="M:TfsBuildExtensions.TfsUtilities.Build.AddWorkspaceMapping(Microsoft.TeamFoundation.Build.Client.IBuildDefinition,System.String,System.String,Microsoft.TeamFoundation.Build.Client.WorkspaceMappingType,Microsoft.TeamFoundation.Build.Client.WorkspaceMappingDepth)">
+            <summary>
+            Adds a new workspace mapping to an existing build definition
+            </summary>
+            <param name="buildDefinition">Build definition for the new mapping</param>
+            <param name="localItem">Local path for the mapping</param>
+            <param name="serverItem">Server path for the mapping</param>
+            <param name="mappingType">Type of mapping (map or cloak)</param>
+            <param name="depth">The Mapping Depth</param>
+            <returns>The created workspace mapping</returns>
+            <remarks>The build definition is not saved after the mapping is added.</remarks>
+        </member>
+        <member name="M:TfsBuildExtensions.TfsUtilities.Build.ClearWorkspaceMappings(Microsoft.TeamFoundation.Build.Client.IBuildDefinition)">
+            <summary>
+            Clears all workspace mappings from a build definition
+            </summary>
+            <param name="buildDefinition">Build definition to clear.</param>
+            <remarks>The build definition is not saved after the mappings are cleared.</remarks>
+        </member>
+        <member name="M:TfsBuildExtensions.TfsUtilities.Build.RemoveServerMapping(Microsoft.TeamFoundation.Build.Client.IBuildDefinition,System.String)">
+            <summary>
+            Removes a specified server mapping from a build definition
+            </summary>
+            <param name="buildDefinition">Build definition to remove the mapping from.</param>
+            <param name="serverItem">Server mapping to remove.</param>
+            <remarks>The build definition is not saved after the mappings are cleared.</remarks>
+        </member>
+        <member name="M:TfsBuildExtensions.TfsUtilities.Build.RemoveLocalMapping(Microsoft.TeamFoundation.Build.Client.IBuildDefinition,System.String)">
+            <summary>
+            Removes a specified local mapping from a build definition
+            </summary>
+            <param name="buildDefinition">Build definition to remove the mapping from.</param>
+            <param name="localItem">Local mapping to remove.</param>
+            <remarks>The build definition is not saved after the mappings are cleared.</remarks>
+        </member>
+        <member name="T:TfsBuildExtensions.TfsUtilities.AutoFileTrackerFromSourceControl">
+            <summary>
+            Auto deleteable temporary file fetched from TFS
+            <para></para>
+            Returns a temporary file that is deleted automatically when dispose is called.
+            <para></para>
+            If you need to use temporary files,wrap its use with a using command so no care is necessary to
+            delete temporary left over files.
+            It can also be used with filesystem file references. In that case no action is performed on the file
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.TfsUtilities.AutoFileTrackerFromSourceControl.trackedFiles">
+            <summary>
+            Contains the file paths of the files we are tracking.
+            When the class is disposed tracked files are deleted.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.TfsUtilities.AutoFileTrackerFromSourceControl.#ctor(Microsoft.TeamFoundation.Client.TfsTeamProjectCollection)">
+            <summary>
+            Initializes a new instance of the AutoFileTrackerFromSourceControl class.
+            Tracks a file reference.
+            <para></para>
+            If the the file is referencing a source control item the file content 
+            is downloaded an download file reference will be returned.
+            When the end of life of the object is reached the (temporary) file 
+            will be automaticaly deleted. 
+            If a filesystem reference is passed then the file is unaltered.
+            </summary>
+            <param name="tfs">The project collection from which we should delete files from source control</param>
+        </member>
+        <member name="M:TfsBuildExtensions.TfsUtilities.AutoFileTrackerFromSourceControl.Finalize">
+            <summary>
+            Finalizes an instance of the AutoFileTrackerFromSourceControl class.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.TfsUtilities.AutoFileTrackerFromSourceControl.GetFile(System.String)">
+            <summary>
+            Gets a file name. If the file references a file in source control a temporary file 
+            is created by download the content. Repeated calls to the same file will allways return
+            the same temporary file (the file will not be download again from source control).
+            The temporary file will be deleted when the instance of the class is disposed. Non source
+            control files will be left untouched
+            </summary>
+            <param name="filePath">The path to track. May be a file from source control in the format $/project/path/filename.txt or
+            a file in the filesystem.</param>
+            <returns>the filename of the file. The filename itself if it's a file in the filesystem or a reference to the temporary file if a file is in source control</returns>
+        </member>
+        <member name="M:TfsBuildExtensions.TfsUtilities.AutoFileTrackerFromSourceControl.Dispose">
+            <summary>
+            Deletes the (tracked) file(s) (if they still exist)
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.TfsUtilities.AutoFileTrackerFromSourceControl.Dispose(System.Boolean)">
+            <summary>
+            Deletes the tracked files if they still exist
+            </summary>
+            <param name="disposing">disposing</param>
+        </member>
+        <member name="M:TfsBuildExtensions.TfsUtilities.AutoFileTrackerFromSourceControl.DeleteFiles">
+            <summary>
+            Deletes the files that are referenced
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.TfsUtilities.AutoFileTrackerFromSourceControl.DownloadToTemporaryFile(System.String)">
+            <summary>
+            Downloads the content of a file from source control into a temporary file
+            </summary>
+            <param name="serverPath">The file to download from source control</param>
+            <returns>The name of the temporary file</returns>
+        </member>
+        <member name="T:TfsBuildExtensions.TfsUtilities.WebAccess">
+            <summary>
+            Clase that provides utility methods for working with Team Foundation Web Access.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.TfsUtilities.WebAccess.GetHyperlinkService(Microsoft.TeamFoundation.Client.TfsTeamProjectCollection)">
+            <summary>
+            Gets the TSWA Linking Service for a project collection
+            </summary>
+            <param name="projectCollection">TFS Project Collection</param>
+            <returns>TswaClientHyperlinkService</returns>
+        </member>
+        <member name="M:TfsBuildExtensions.TfsUtilities.WebAccess.GetBuildDetailsUri(Microsoft.TeamFoundation.Client.TfsTeamProjectCollection,System.Uri)">
+            <summary>
+            Gets the TSWA build details uri
+            </summary>
+            <param name="projectCollection">Team Project collection</param>
+            <param name="buildUri">Build Uri</param>
+            <returns>Url to view build details in TSWA</returns>
+        </member>
+        <member name="M:TfsBuildExtensions.TfsUtilities.WebAccess.GetWorkItemEditorUri(Microsoft.TeamFoundation.Client.TfsTeamProjectCollection,System.Int32)">
+            <summary>
+            Gets the TSWA work item editor
+            </summary>
+            <param name="projectCollection">Team Project collection</param>
+            <param name="workItemId">Work Item Id</param>
+            <returns>Url to view the work item editor in TSWA</returns>
+        </member>
+        <member name="T:TfsBuildExtensions.TfsUtilities.WorkItems">
+            <summary>
+            Performs various actions with work items.
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.TfsUtilities.WorkItems.GetWorkItemById(Microsoft.TeamFoundation.Client.TfsTeamProjectCollection,System.Int32)">
+            <summary>
+            Returns a work item by ID
+            </summary>
+            <param name="projectCollection">Tfs Project Collection that contains the work item.</param>
+            <param name="workItemId">Id for the work item</param>
+            <returns>The found work item.</returns>
+            <exception cref="T:System.ArgumentException">Occurs when the work item id is not valid.</exception>
+        </member>
+    </members>
+</doc>
