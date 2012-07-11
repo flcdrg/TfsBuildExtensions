@@ -145,6 +145,7 @@
     <Compile Include="CodeQuality\CodeMetrics\Proxy\FileSystemProxy.cs" />
     <Compile Include="CodeQuality\CodeMetrics\SpecificMetricThresholds.cs" />
     <Compile Include="CodeQuality\CodeMetrics\UnknownMetricNameException.cs" />
+    <Compile Include="CodeQuality\NUnit\DomainUsage.cs" />
     <Compile Include="CodeQuality\NUnit\NUnit.cs" />
     <Compile Include="CodeQuality\NUnit\NUnitDotCover.cs" />
     <Compile Include="CodeQuality\NUnit\NUnitDotCoverInternal.cs" />

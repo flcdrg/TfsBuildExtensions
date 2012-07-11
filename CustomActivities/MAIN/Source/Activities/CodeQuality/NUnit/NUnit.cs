@@ -222,7 +222,7 @@ namespace TfsBuildExtensions.Activities.CodeQuality
         /// </summary>
         [Browsable(true)]
         [Description("Process model for tests. Supports Single, Separate, Multiple. Single is the Default")]
-        [DefaultValue(ProcessModel.Single)]
+        [DefaultValue(ProcessModel.Default)]
         public InArgument<ProcessModel> Process { get; set; }
 
         /// <summary>
@@ -230,7 +230,8 @@ namespace TfsBuildExtensions.Activities.CodeQuality
         /// </summary>
         [Browsable(true)]
         [Description("AppDomain Usage for tests. Supports None, Single, Multiple. The default is to use multiple domains if multiple assemblies are listed on the command line. Otherwise a single domain is used.")]
-        public InArgument<string> Domain { get; set; }
+        [DefaultValue(DomainUsage.Default)]
+        public InArgument<DomainUsage> Domain { get; set; }
 
         /// <summary>
         /// Framework version to be used for tests
@@ -280,13 +281,18 @@ namespace TfsBuildExtensions.Activities.CodeQuality
 
             var sequence = new Sequence() {Variables = { workingDirectory} };
 
-            sequence.Activities.Add(new Assign<string> { To = workingDirectory, Value = new InArgument<string>(x => this.GetWorkingDirectory(x)) });
+            sequence.Activities.Add(new Assign<string>
+            {
+                To = workingDirectory, 
+                Value = new InArgument<string>(x => this.Assemblies.Get(x).First()), 
+                DisplayName = "Assign working directory"
+            });
 
             var item = new NUnitInternal()
             {
                 Assemblies = new InArgument<IEnumerable<string>>(x => this.Assemblies.Get(x)),
                 Configuration = new InArgument<string>(x => this.Configuration.Get(x)),
-                Domain = new InArgument<string>(x => this.Domain.Get(x)),
+                Domain = new InArgument<string>(x => this.Domain.Get(x).ToString()),
                 ErrorOutputFile = new InArgument<string>(x => this.ErrorOutputFile.Get(x)),
                 Errors = new OutArgument<int>(x => this.Errors.GetLocation(x).Value),
                 ExitCode = new OutArgument<int>(x => this.ExitCode.GetLocation(x).Value),

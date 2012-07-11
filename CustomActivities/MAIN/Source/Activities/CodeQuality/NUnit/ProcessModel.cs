@@ -1,14 +1,17 @@
+// <copyright file="ProcessModel.cs">(c) http://TfsBuildExtensions.codeplex.com/. This source is subject to the Microsoft Permissive License. See http://www.microsoft.com/resources/sharedsource/licensingbasics/sharedsourcelicenses.mspx. All other rights reserved.</copyright>
+
 namespace TfsBuildExtensions.Activities.CodeQuality
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-
     /// <summary>
     /// Controls how NUnit loads tests in processes
     /// </summary>
     public enum ProcessModel
     {
+        /// <summary>
+        /// Default process model
+        /// </summary>
+        Default,
+
         /// <summary>
         /// All the tests are run in the nunit-console process
         /// </summary>

@@ -262,3 +262,4 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Auth", Scope = "member", Target = "TfsBuildExtensions.Activities.Communication.Sms.#AuthToken")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Scope = "member", Target = "TfsBuildExtensions.Activities.CodeQuality.NUnit+ProcessXmlResultsFile.#InternalExecute()")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Scope = "member", Target = "TfsBuildExtensions.Activities.CodeQuality.ProcessXmlResultsFile.#InternalExecute()")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1505:AvoidUnmaintainableCode", Scope = "member", Target = "TfsBuildExtensions.Activities.CodeQuality.NUnit.#CreateInternalBody()")]

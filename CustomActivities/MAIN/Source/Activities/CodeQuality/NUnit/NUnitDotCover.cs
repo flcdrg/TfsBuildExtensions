@@ -92,6 +92,10 @@ namespace TfsBuildExtensions.Activities.CodeQuality
         [Description("Path to dotCover working directory")]
         public InArgument<string> TargetWorkingDirectory { get; set; }
 
+        /// <summary>
+        /// Create body
+        /// </summary>
+        /// <returns>Activity object</returns>
         protected override Activity CreateInternalBody()
         {
             var sequence = new Sequence();
