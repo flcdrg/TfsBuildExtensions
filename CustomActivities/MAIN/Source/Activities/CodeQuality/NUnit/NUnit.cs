@@ -3,9 +3,11 @@
 //-----------------------------------------------------------------------
 
 using System.Activities.Statements;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Xml;
+using System.Xml.Xsl;
 
 namespace TfsBuildExtensions.Activities.CodeQuality
 {
@@ -318,10 +320,21 @@ namespace TfsBuildExtensions.Activities.CodeQuality
                 OutputXmlFile = new InArgument<string>(x => this.OutputXmlFile.Get(x)),
                 WorkingDirectory = new InArgument<string>(x => this.GetWorkingDirectory(x))
             };
+
             sequence.Activities.Add(processXml);
 
-            var publishResults = new PublishTestResultsToTfs();
-            sequence.Activities.Add(publishResults);
+            var publishResults = new PublishTestResultsToTfs()
+            {
+                DisplayName = "Publish to TFS",
+                Flavor = new InArgument<string>(x => this.Flavor.Get(x)),
+                OutputXmlFile = new InArgument<string>(x => this.OutputXmlFile.Get(x)),
+                Platform = new InArgument<string>(x => this.Platform.Get(x)),
+                WorkingDirectory = new InArgument<string>(x => this.GetWorkingDirectory(x))
+            };
+
+            var condition = new If { Condition = new InArgument<bool>(x => !this.PublishTestResults.Get(x)), Then = publishResults };
+
+            sequence.Activities.Add(condition);
             return sequence;
         }
 
@@ -330,12 +343,26 @@ namespace TfsBuildExtensions.Activities.CodeQuality
             return Path.GetDirectoryName(this.Assemblies.Get(context).First());
         }
 
-        private sealed class ProcessXmlResultsFile : BaseCodeActivity
+        private abstract class BaseTestResultsCodeActivity : BaseCodeActivity
         {
-            public InArgument<string> WorkingDirectory { private get; set; }
-
             public InArgument<string> OutputXmlFile { private get; set; }
 
+            public InArgument<string> WorkingDirectory { protected get; set; }
+
+            protected string GetResultFileName(ActivityContext context)
+            {
+                string filename = "TestResult.xml";
+                if (this.OutputXmlFile.Get(context) != null && !string.IsNullOrEmpty(this.OutputXmlFile.Get(context)))
+                {
+                    filename = this.OutputXmlFile.Get(context);
+                }
+
+                return filename;
+            }
+        }
+
+        private sealed class ProcessXmlResultsFile : BaseTestResultsCodeActivity
+        {
             public OutArgument<int> Failures { private get; set; }
 
             /// <summary>
@@ -419,26 +446,112 @@ namespace TfsBuildExtensions.Activities.CodeQuality
             private static int GetAttributeInt32Value(string name, XmlNode node)
             {
                 if (node.Attributes[name] != null)
+                {
                     return Convert.ToInt32(node.Attributes[name].Value, CultureInfo.InvariantCulture);
+                }
 
                 return 0;
             }
-
-            private string GetResultFileName(ActivityContext context)
-            {
-                string filename = "TestResult.xml";
-                if (OutputXmlFile.Get(context) != null && !string.IsNullOrEmpty(OutputXmlFile.Get(context)))
-                    filename = OutputXmlFile.Get(context);
-
-                return filename;
-            }
         }
 
-        private sealed class PublishTestResultsToTfs : BaseCodeActivity
+        private sealed class PublishTestResultsToTfs : BaseTestResultsCodeActivity
         {
+            public InArgument<string> Platform { private get; set; }
+
+            /// <summary>
+            /// Which flavor to publish test results for (ex. Debug)
+            /// </summary>
+            public InArgument<string> Flavor { private get; set; }
+
             protected override void InternalExecute()
             {
+                if (string.IsNullOrEmpty(this.Platform.Get(this.ActivityContext)) || string.IsNullOrEmpty(this.Flavor.Get(this.ActivityContext)))
+                {
+                    this.LogBuildError("When publishing test results, both Platform and Flavor must be specified");
+                    return;
+                }
+
+                string folder = this.WorkingDirectory.Get(ActivityContext);
+
+                string filename = Path.Combine(folder, this.GetResultFileName(this.ActivityContext));
+
+                string resultTrxFile = Path.Combine(folder, Path.GetFileNameWithoutExtension(this.GetResultFileName(this.ActivityContext)) + ".trx");
+                if (!File.Exists(filename))
+                {
+                    return;
+                }
+
+                this.TransformNUnitToMsTest(filename, resultTrxFile);
+
+                var buildDetail = ActivityContext.GetExtension<IBuildDetail>();
+                string collectionUrl = buildDetail.BuildServer.TeamProjectCollection.Uri.ToString();
+                string buildNumber = buildDetail.BuildNumber;
+                string teamProject = buildDetail.TeamProject;
+                string platform = this.Platform.Get(this.ActivityContext);
+                string flavor = this.Flavor.Get(this.ActivityContext);
+                this.PublishMsTestResults(resultTrxFile, collectionUrl, buildNumber, teamProject, platform, flavor);
             }
+
+            private void TransformNUnitToMsTest(string nunitResultFile, string mstestResultFile)
+            {
+                Stream s = GetType().Assembly.GetManifestResourceStream("TfsBuildExtensions.Activities.CodeQuality.NUnit.NUnitToMSTest.xslt");
+                if (s == null)
+                {
+                    this.LogBuildError("Could not load NUnitToMSTest.xslt from embedded resources");
+                    return;
+                }
+
+                using (var reader = new XmlTextReader(s))
+                {
+                    var transform = new XslCompiledTransform();
+                    transform.Load(reader);
+                    transform.Transform(nunitResultFile, mstestResultFile);
+                }
+            }
+
+            private void PublishMsTestResults(string resultTrxFile, string collectionUrl, string buildNumber, string teamProject, string platform, string flavor)
+            {
+                string argument = string.Format("/publish:\"{0}\" /publishresultsfile:\"{1}\" /publishbuild:\"{2}\" /teamproject:\"{3}\" /platform:\"{4}\" /flavor:\"{5}\"", collectionUrl, resultTrxFile, buildNumber, teamProject, platform, flavor);
+                this.RunProcess(Environment.ExpandEnvironmentVariables(@"%VS100COMNTOOLS%\..\IDE\MSTest.exe"), null, argument);
+            }
+
+            private void RunProcess(string fullPath, string workingDirectory, string arguments)
+            {
+                using (var proc = new Process())
+                {
+                    proc.StartInfo.FileName = fullPath;
+
+                    proc.StartInfo.UseShellExecute = false;
+                    proc.StartInfo.RedirectStandardOutput = true;
+                    proc.StartInfo.RedirectStandardError = true;
+                    proc.StartInfo.Arguments = arguments;
+                    this.LogBuildMessage("Running " + proc.StartInfo.FileName + " " + proc.StartInfo.Arguments, BuildMessageImportance.High);
+
+                    if (!string.IsNullOrEmpty(workingDirectory))
+                    {
+                        proc.StartInfo.WorkingDirectory = workingDirectory;
+                    }
+
+                    proc.Start();
+
+                    string outputStream = proc.StandardOutput.ReadToEnd();
+                    if (outputStream.Length > 0)
+                    {
+                        this.LogBuildMessage(outputStream);
+                    }
+
+                    string errorStream = proc.StandardError.ReadToEnd();
+                    if (errorStream.Length > 0)
+                    {
+                        this.LogBuildError(errorStream);
+                    }
+
+                    proc.WaitForExit();
+                    return;
+                }
+            }
+
         }
+
     }
 }
