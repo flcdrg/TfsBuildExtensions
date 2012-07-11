@@ -165,3 +165,10 @@ pip-log.txt
 /.svn
 
 *.CodeAnalysisLog.xml
+/CustomActivities/MAIN/Source/Output
+/CustomActivities/MAIN/Source/BuildBinaries
+/CodePlex
+/CustomActivities/MAIN/Source/BuildBinaries
+/CustomActivities/MAIN/Source/BuildBinaries
+/CustomActivities/MAIN/Source/Output
+/CodePlex/Code Activities
