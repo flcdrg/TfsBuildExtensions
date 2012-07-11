@@ -146,11 +146,13 @@
     <Compile Include="CodeQuality\CodeMetrics\SpecificMetricThresholds.cs" />
     <Compile Include="CodeQuality\CodeMetrics\UnknownMetricNameException.cs" />
     <Compile Include="CodeQuality\NUnit\DomainUsage.cs" />
+    <Compile Include="CodeQuality\NUnit\GenerateReport.cs" />
     <Compile Include="CodeQuality\NUnit\NUnit.cs" />
     <Compile Include="CodeQuality\NUnit\NUnitDotCover.cs" />
     <Compile Include="CodeQuality\NUnit\NUnitDotCoverInternal.cs" />
     <Compile Include="CodeQuality\NUnit\NUnitInternal.cs" />
     <Compile Include="CodeQuality\NUnit\ProcessModel.cs" />
+    <Compile Include="CodeQuality\NUnit\ReportType.cs" />
     <Compile Include="CodeQuality\NUnit\SimpleCommandLineBuilder.cs" />
     <Compile Include="CodeQuality\StatLight\StatLight.cs" />
     <Compile Include="CodeQuality\FxCop.cs" />

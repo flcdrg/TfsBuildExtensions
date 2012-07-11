@@ -349,7 +349,7 @@ namespace TfsBuildExtensions.Activities.CodeQuality
                 WorkingDirectory = new InArgument<string>(x => workingDirectory.Get(x))
             };
 
-            var condition = new If { Condition = new InArgument<bool>(x => !this.PublishTestResults.Get(x)), Then = publishResults };
+            var condition = new If { Condition = new InArgument<bool>(x => this.PublishTestResults.Get(x)), Then = publishResults };
 
             sequence.Activities.Add(condition);
             return sequence;

@@ -8,10 +8,7 @@ namespace TfsBuildExtensions.Activities.CodeQuality
     using System.Activities.Statements;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Diagnostics;
     using System.Linq;
-
-    using Extended;
 
     using Microsoft.TeamFoundation.Build.Client;
 
@@ -28,19 +25,6 @@ namespace TfsBuildExtensions.Activities.CodeQuality
         public NUnitDotCover()
         {
             this.CoverageToolPath = @"C:\Program Files (x86)\JetBrains\dotCover\v2.0\Bin\dotCover.exe";
-        }
-
-        private enum ReportType
-        {
-            /// <summary>
-            /// XML Report
-            /// </summary>
-            Xml,
-
-            /// <summary>
-            /// HTML Report
-            /// </summary>
-            Html
         }
 
         /// <summary>
@@ -104,7 +88,7 @@ namespace TfsBuildExtensions.Activities.CodeQuality
             {
                 Assemblies = new InArgument<IEnumerable<string>>(x => this.Assemblies.Get(x)),
                 Configuration = new InArgument<string>(x => this.Configuration.Get(x)),
-                Domain = new InArgument<string>(x => this.Domain.Get(x)),
+                Domain = new InArgument<string>(x => this.Domain.Get(x).ToString()),
                 ErrorOutputFile = new InArgument<string>(x => this.ErrorOutputFile.Get(x)),
                 Errors = new OutArgument<int>(x => this.Errors.GetLocation(x).Value),
                 ExitCode = new OutArgument<int>(x => this.ExitCode.GetLocation(x).Value),
@@ -146,7 +130,7 @@ namespace TfsBuildExtensions.Activities.CodeQuality
             {
                 TargetWorkingDirectory = new InArgument<string>(x => this.TargetWorkingDirectory.Get(x)),
                 CoverageOutputFile = new InArgument<string>(x => this.CoverageOutputHtmlFile.Get(x)),
-                Type = ReportType.Html,
+                Type = new InArgument<ReportType>(ReportType.Html),
                 CoverageToolPath = new InArgument<string>(x => this.CoverageToolPath.Get(x)),
                 DisplayName = "HTML Report"
             };
@@ -157,7 +141,7 @@ namespace TfsBuildExtensions.Activities.CodeQuality
             {
                 TargetWorkingDirectory = new InArgument<string>(x => this.TargetWorkingDirectory.Get(x)),
                 CoverageOutputFile = new InArgument<string>(x => this.CoverageOutputXmlFile.Get(x)),
-                Type = ReportType.Xml,
+                Type = new InArgument<ReportType>(ReportType.Xml),
                 CoverageToolPath = new InArgument<string>(x => this.CoverageToolPath.Get(x)),
                 DisplayName = "XML Report"
             };
@@ -166,75 +150,5 @@ namespace TfsBuildExtensions.Activities.CodeQuality
             return sequence;
         }
 
-        private sealed class GenerateReport : BaseCodeActivity
-        {
-            public InArgument<string> TargetWorkingDirectory { private get; set; }
-
-            public InArgument<string> CoverageOutputFile { private get; set; }
-
-            public InArgument<string> CoverageToolPath { private get; set; }
-
-            public InArgument<ReportType> Type { private get; set; } 
-
-            protected override void InternalExecute()
-            {
-                string fullPath = this.CoverageToolPath.Get(this.ActivityContext);
-
-                string workingDirectory = this.TargetWorkingDirectory.Get(this.ActivityContext);
-
-                this.RunProcess(fullPath, workingDirectory, this.GenerateReportCommandLineCommands(this.ActivityContext, this.Type.Get(this.ActivityContext), this.CoverageOutputFile.Get(this.ActivityContext)));
-            }
-
-            private string GenerateReportCommandLineCommands(ActivityContext context, ReportType reportType, string outputPath)
-            {
-                // C:\Program Files (x86)\JetBrains\dotCover\v2.0\Bin\dotCover.exe report /Source="E:\30\67\Binaries\DotCoverReport\Coverage.bin" /ReportType=XML /Output=E:\30\67\Binaries\DotCoverReport\Coverage.xml
-                var builder = new SimpleCommandLineBuilder();
-
-                builder.AppendSwitch("report");
-
-                builder.AppendSwitchIfNotNull("/Source=", this.CoverageOutputFile.Get(context));
-
-                builder.AppendSwitchIfNotNull("/ReportType=", reportType.ToString().ToUpperInvariant());
-
-                builder.AppendSwitchIfNotNull("/Output=", outputPath);
-
-                return builder.ToString();
-            }
-
-            private void RunProcess(string fullPath, string workingDirectory, string arguments)
-            {
-                using (var proc = new Process())
-                {
-                    proc.StartInfo.FileName = fullPath;
-
-                    proc.StartInfo.UseShellExecute = false;
-                    proc.StartInfo.RedirectStandardOutput = true;
-                    proc.StartInfo.RedirectStandardError = true;
-                    proc.StartInfo.Arguments = arguments;
-                    this.LogBuildMessage("Running " + proc.StartInfo.FileName + " " + proc.StartInfo.Arguments, BuildMessageImportance.High);
-
-                    if (!string.IsNullOrEmpty(workingDirectory))
-                    {
-                        proc.StartInfo.WorkingDirectory = workingDirectory;
-                    }
-
-                    proc.Start();
-
-                    string outputStream = proc.StandardOutput.ReadToEnd();
-                    if (outputStream.Length > 0)
-                    {
-                        this.LogBuildMessage(outputStream);
-                    }
-
-                    string errorStream = proc.StandardError.ReadToEnd();
-                    if (errorStream.Length > 0)
-                    {
-                        this.LogBuildError(errorStream);
-                    }
-
-                    proc.WaitForExit();
-                }
-            }
-        }
     }
 }
