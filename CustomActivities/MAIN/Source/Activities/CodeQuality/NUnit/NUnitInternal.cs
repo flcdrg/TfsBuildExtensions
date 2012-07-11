@@ -298,18 +298,7 @@ namespace TfsBuildExtensions.Activities.CodeQuality
             int exitCode = this.RunProcess(fullPath, workingDirectory, this.GenerateCommandLineCommands(this.ActivityContext, workingDirectory));
             this.ExitCode.Set(this.ActivityContext, exitCode);
 
-            this.ProcessXmlResultsFile(this.ActivityContext, workingDirectory);
             this.PublishTestResultsToTfs(this.ActivityContext, workingDirectory);
-        }
-
-        private static int GetAttributeInt32Value(string name, XmlNode node)
-        {
-            if (node.Attributes[name] != null)
-            {
-                return Convert.ToInt32(node.Attributes[name].Value, CultureInfo.InvariantCulture);
-            }
-
-            return 0;
         }
 
         private void TransformNUnitToMsTest(string nunitResultFile, string mstestResultFile)
@@ -401,48 +390,6 @@ namespace TfsBuildExtensions.Activities.CodeQuality
         {
             string argument = string.Format("/publish:\"{0}\" /publishresultsfile:\"{1}\" /publishbuild:\"{2}\" /teamproject:\"{3}\" /platform:\"{4}\" /flavor:\"{5}\"", collectionUrl, resultTrxFile, buildNumber, teamProject, platform, flavor);
             this.RunProcess(Environment.ExpandEnvironmentVariables(@"%VS100COMNTOOLS%\..\IDE\MSTest.exe"), null, argument);
-        }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "Exception is logged")]
-        private void ProcessXmlResultsFile(ActivityContext context, string folder)
-        {
-            string filename = Path.Combine(folder, this.GetResultFileName(context));
-            this.LogBuildMessage("Processing " + filename, BuildMessageImportance.High);
-            if (File.Exists(filename))
-            {
-                var doc = new XmlDocument();
-                try
-                {
-                    doc.Load(filename);
-                }
-                catch (Exception ex)
-                {
-                    LogBuildError(ex.Message);
-                    return;
-                }
-
-                XmlNode root = doc.DocumentElement;
-                if (root == null)
-                {
-                    this.LogBuildError("Failed to load the OutputXmlFile");
-                    return;
-                }
-
-                this.Total.Set(context, GetAttributeInt32Value("total", root));
-                this.NotRun.Set(context, GetAttributeInt32Value("not-run", root));
-                this.Errors.Set(context, GetAttributeInt32Value("errors", root));
-                this.Failures.Set(context, GetAttributeInt32Value("failures", root));
-                this.Inconclusive.Set(context, GetAttributeInt32Value("inconclusive", root));
-                this.Ignored.Set(context, GetAttributeInt32Value("ignored", root));
-                this.Skipped.Set(context, GetAttributeInt32Value("skipped", root));
-                this.Invalid.Set(context, GetAttributeInt32Value("invalid", root));
-
-                if (this.Errors.Get(context) > 0 || this.Failures.Get(context) > 0)
-                {
-                    var buildDetail = ActivityContext.GetExtension<IBuildDetail>();
-                    buildDetail.Status = BuildStatus.PartiallySucceeded;
-                }
-            }
         }
 
         private string GetResultFileName(ActivityContext context)
