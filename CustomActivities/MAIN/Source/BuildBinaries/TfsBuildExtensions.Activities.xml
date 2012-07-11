@@ -1492,6 +1492,12 @@
             Initializes a new instance of the NUnit class
             </summary>
         </member>
+        <member name="M:TfsBuildExtensions.Activities.CodeQuality.NUnit.CreateInternalBody">
+            <summary>
+            Create activity
+            </summary>
+            <returns>Activity object</returns>
+        </member>
         <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnit.Version">
             <summary>
             The version of NUnit to run. Default is 2.5.7
@@ -1645,6 +1651,56 @@
         <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnit.ExitCode">
             <summary>
             Name of the test case(s), fixture(s) or namespace(s) to run
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnit.ProcessXmlResultsFile.NotRun">
+            <summary>
+            Gets the NotRun count
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnit.ProcessXmlResultsFile.Total">
+            <summary>
+            Gets the Total count
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnit.ProcessXmlResultsFile.Errors">
+            <summary>
+            Gets the Errors count
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnit.ProcessXmlResultsFile.Inconclusive">
+            <summary>
+            Gets the Inconclusive count
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnit.ProcessXmlResultsFile.Ignored">
+            <summary>
+            Gets the Ignored count
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnit.ProcessXmlResultsFile.Skipped">
+            <summary>
+            Gets the Skipped count
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnit.ProcessXmlResultsFile.Invalid">
+            <summary>
+            Gets the Invalid count
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnit.PublishTestResultsToTfs.Flavor">
+            <summary>
+            Which flavor to publish test results for (ex. Debug)
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.CodeQuality.NUnitDotCover">
+            <summary>
+            Run NUnit using dotCover for code coverage
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.CodeQuality.NUnitDotCover.#ctor">
+            <summary>
+            Create instance
             </summary>
         </member>
         <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitInternal.Version">

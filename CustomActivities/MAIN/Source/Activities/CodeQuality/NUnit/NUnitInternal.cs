@@ -12,8 +12,6 @@ namespace TfsBuildExtensions.Activities.CodeQuality
     using System.Globalization;
     using System.IO;
     using System.Linq;
-    using System.Xml;
-    using System.Xml.Xsl;
 
     using Extended;
 
@@ -297,25 +295,6 @@ namespace TfsBuildExtensions.Activities.CodeQuality
         {
             int exitCode = this.RunProcess(fullPath, workingDirectory, this.GenerateCommandLineCommands(this.ActivityContext, workingDirectory));
             this.ExitCode.Set(this.ActivityContext, exitCode);
-
-            this.PublishTestResultsToTfs(this.ActivityContext, workingDirectory);
-        }
-
-        private void TransformNUnitToMsTest(string nunitResultFile, string mstestResultFile)
-        {
-            Stream s = GetType().Assembly.GetManifestResourceStream("TfsBuildExtensions.Activities.CodeQuality.NUnit.NUnitToMSTest.xslt");
-            if (s == null)
-            {
-                this.LogBuildError("Could not load NUnitToMSTest.xslt from embedded resources");
-                return;
-            }
-
-            using (var reader = new XmlTextReader(s))
-            {
-                var transform = new XslCompiledTransform();
-                transform.Load(reader);
-                transform.Transform(nunitResultFile, mstestResultFile);
-            }
         }
 
         private int RunProcess(string fullPath, string workingDirectory, string arguments)
@@ -352,55 +331,6 @@ namespace TfsBuildExtensions.Activities.CodeQuality
                 proc.WaitForExit();
                 return proc.ExitCode;
             }
-        }
-
-        private void PublishTestResultsToTfs(ActivityContext context, string folder)
-        {
-            if (!this.PublishTestResults.Get(context))
-            {
-                return;
-            }
-
-            if (string.IsNullOrEmpty(this.Platform.Get(context)) || string.IsNullOrEmpty(this.Flavor.Get(context)))
-            {
-                this.LogBuildError("When publishing test results, both Platform and Flavor must be specified");
-                return;
-            }
-
-            string filename = Path.Combine(folder, this.GetResultFileName(context));
-
-            string resultTrxFile = Path.Combine(folder, Path.GetFileNameWithoutExtension(this.GetResultFileName(context)) + ".trx");
-            if (!File.Exists(filename))
-            {
-                return;
-            }
-
-            this.TransformNUnitToMsTest(filename, resultTrxFile);
-
-            var buildDetail = ActivityContext.GetExtension<IBuildDetail>();
-            string collectionUrl = buildDetail.BuildServer.TeamProjectCollection.Uri.ToString();
-            string buildNumber = buildDetail.BuildNumber;
-            string teamProject = buildDetail.TeamProject;
-            string platform = this.Platform.Get(context);
-            string flavor = this.Flavor.Get(context);
-            this.PublishMsTestResults(resultTrxFile, collectionUrl, buildNumber, teamProject, platform, flavor);
-        }
-
-        private void PublishMsTestResults(string resultTrxFile, string collectionUrl, string buildNumber, string teamProject, string platform, string flavor)
-        {
-            string argument = string.Format("/publish:\"{0}\" /publishresultsfile:\"{1}\" /publishbuild:\"{2}\" /teamproject:\"{3}\" /platform:\"{4}\" /flavor:\"{5}\"", collectionUrl, resultTrxFile, buildNumber, teamProject, platform, flavor);
-            this.RunProcess(Environment.ExpandEnvironmentVariables(@"%VS100COMNTOOLS%\..\IDE\MSTest.exe"), null, argument);
-        }
-
-        private string GetResultFileName(ActivityContext context)
-        {
-            string filename = "TestResult.xml";
-            if (this.OutputXmlFile.Get(context) != null && !string.IsNullOrEmpty(this.OutputXmlFile.Get(context)))
-            {
-                filename = this.OutputXmlFile.Get(context);
-            }
-
-            return filename;
         }
     }
 }

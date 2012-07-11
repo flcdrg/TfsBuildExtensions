@@ -2,20 +2,19 @@
 // <copyright file="NUnit.cs">(c) http://TfsBuildExtensions.codeplex.com/. This source is subject to the Microsoft Permissive License. See http://www.microsoft.com/resources/sharedsource/licensingbasics/sharedsourcelicenses.mspx. All other rights reserved.</copyright>
 //-----------------------------------------------------------------------
 
-using System.Activities.Statements;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
-using System.Xml;
-using System.Xml.Xsl;
-
 namespace TfsBuildExtensions.Activities.CodeQuality
 {
     using System;
     using System.Activities;
+    using System.Activities.Statements;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Diagnostics;
+    using System.Globalization;
+    using System.IO;
     using System.Linq;
+    using System.Xml;
+    using System.Xml.Xsl;
 
     using Microsoft.TeamFoundation.Build.Client;
 
@@ -267,6 +266,10 @@ namespace TfsBuildExtensions.Activities.CodeQuality
         [Description("ExitCode for the NUnit process")]
         public OutArgument<int> ExitCode { get; set; }
 
+        /// <summary>
+        /// Create activity
+        /// </summary>
+        /// <returns>Activity object</returns>
         protected override Activity CreateInternalBody()
         {
             var sequence = new Sequence();
@@ -547,11 +550,8 @@ namespace TfsBuildExtensions.Activities.CodeQuality
                     }
 
                     proc.WaitForExit();
-                    return;
                 }
             }
-
         }
-
     }
 }

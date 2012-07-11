@@ -32,34 +32,62 @@ namespace TfsBuildExtensions.Activities.CodeQuality
 
         private enum ReportType
         {
+            /// <summary>
+            /// XML Report
+            /// </summary>
             Xml,
+
+            /// <summary>
+            /// HTML Report
+            /// </summary>
             Html
         }
 
+        /// <summary>
+        /// Path to dotCover
+        /// </summary>
         [Browsable(true)]
         [Description("Path to dotCover coverage tool")]
         public InArgument<string> CoverageToolPath { get; set; }
 
+        /// <summary>
+        /// True if TargetArguments paths are made absolute
+        /// </summary>
         [Browsable(true)]
         [Description("True if dotCover should resolve paths in TargetArguments")]
         public InArgument<bool> AnalyzeTargetArguments { get; set; }
 
+        /// <summary>
+        /// dotCover output file
+        /// </summary>
         [Browsable(true)]
         [Description("Path to dotCover output file")]
         public InArgument<string> CoverageOutputFile { get; set; }
 
+        /// <summary>
+        /// XML output file
+        /// </summary>
         [Browsable(true)]
         [Description("Path to dotCover output XML file")]
         public InArgument<string> CoverageOutputXmlFile { get; set; }
 
+        /// <summary>
+        /// HTML output file
+        /// </summary>
         [Browsable(true)]
         [Description("Path to dotCover output HTML file")]
         public InArgument<string> CoverageOutputHtmlFile { get; set; }
 
+        /// <summary>
+        /// dotCover config file
+        /// </summary>
         [Browsable(true)]
         [Description("Path to dotCover configuration file")]
         public InArgument<string> ConfigFile { get; set; }
 
+        /// <summary>
+        /// dotCover working directory
+        /// </summary>
         [Browsable(true)]
         [Description("Path to dotCover working directory")]
         public InArgument<string> TargetWorkingDirectory { get; set; }
@@ -106,7 +134,6 @@ namespace TfsBuildExtensions.Activities.CodeQuality
                 CoverageOutputXmlFile = new InArgument<string>(x => this.CoverageOutputXmlFile.Get(x)),
                 CoverageToolPath = new InArgument<string>(x => this.CoverageToolPath.Get(x)),
                 TargetWorkingDirectory = new InArgument<string>(x => this.TargetWorkingDirectory.Get(x)),
-                
             };
 
             sequence.Activities.Add(item);
@@ -145,7 +172,6 @@ namespace TfsBuildExtensions.Activities.CodeQuality
 
             public InArgument<ReportType> Type { private get; set; } 
 
-
             protected override void InternalExecute()
             {
                 string fullPath = this.CoverageToolPath.Get(this.ActivityContext);
@@ -154,7 +180,6 @@ namespace TfsBuildExtensions.Activities.CodeQuality
 
                 this.RunProcess(fullPath, workingDirectory, this.GenerateReportCommandLineCommands(this.ActivityContext, this.Type.Get(this.ActivityContext), this.CoverageOutputFile.Get(this.ActivityContext)));
             }
-
 
             private string GenerateReportCommandLineCommands(ActivityContext context, ReportType reportType, string outputPath)
             {
@@ -172,7 +197,7 @@ namespace TfsBuildExtensions.Activities.CodeQuality
                 return builder.ToString();
             }
 
-            public int RunProcess(string fullPath, string workingDirectory, string arguments)
+            private void RunProcess(string fullPath, string workingDirectory, string arguments)
             {
                 using (var proc = new Process())
                 {
@@ -182,7 +207,7 @@ namespace TfsBuildExtensions.Activities.CodeQuality
                     proc.StartInfo.RedirectStandardOutput = true;
                     proc.StartInfo.RedirectStandardError = true;
                     proc.StartInfo.Arguments = arguments;
-                    LogBuildMessage("Running " + proc.StartInfo.FileName + " " + proc.StartInfo.Arguments, BuildMessageImportance.High);
+                    this.LogBuildMessage("Running " + proc.StartInfo.FileName + " " + proc.StartInfo.Arguments, BuildMessageImportance.High);
 
                     if (!string.IsNullOrEmpty(workingDirectory))
                     {
@@ -194,20 +219,18 @@ namespace TfsBuildExtensions.Activities.CodeQuality
                     string outputStream = proc.StandardOutput.ReadToEnd();
                     if (outputStream.Length > 0)
                     {
-                        LogBuildMessage(outputStream);
+                        this.LogBuildMessage(outputStream);
                     }
 
                     string errorStream = proc.StandardError.ReadToEnd();
                     if (errorStream.Length > 0)
                     {
-                        LogBuildError(errorStream);
+                        this.LogBuildError(errorStream);
                     }
 
                     proc.WaitForExit();
-                    return proc.ExitCode;
                 }
             }
-
         }
     }
 }
