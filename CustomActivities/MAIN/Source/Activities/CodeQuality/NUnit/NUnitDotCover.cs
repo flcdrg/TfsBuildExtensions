@@ -2,6 +2,7 @@
 // <copyright file="NUnitDotCover.cs">(c) http://TfsBuildExtensions.codeplex.com/. This source is subject to the Microsoft Permissive License. See http://www.microsoft.com/resources/sharedsource/licensingbasics/sharedsourcelicenses.mspx. All other rights reserved.</copyright>
 //-----------------------------------------------------------------------
 
+
 namespace TfsBuildExtensions.Activities.CodeQuality
 {
     using System.Activities;
@@ -11,11 +12,13 @@ namespace TfsBuildExtensions.Activities.CodeQuality
     using System.Linq;
 
     using Microsoft.TeamFoundation.Build.Client;
-
+    using Microsoft.TeamFoundation.Build.Workflow.Tracking;
+    
     /// <summary>
     /// Run NUnit using dotCover for code coverage
     /// </summary>
     [BuildActivity(HostEnvironmentOption.All)]
+    [ActivityTracking(ActivityTrackingOption.ActivityOnly)]
     [Description("Activity to run NUnit with dotCover as part of a TFS Build")]
     public class NUnitDotCover : NUnit
     {

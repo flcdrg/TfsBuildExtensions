@@ -9,10 +9,10 @@ namespace TfsBuildExtensions.Activities.CodeQuality
     using System.Activities.Statements;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.IO;
     using System.Linq;
 
     using Microsoft.TeamFoundation.Build.Client;
+    using Microsoft.TeamFoundation.Build.Workflow.Tracking;
 
     /// <summary>
     /// Executes Test Cases using NUnit (Tested using v2.5.7)
@@ -33,6 +33,7 @@ namespace TfsBuildExtensions.Activities.CodeQuality
     /// </summary>
     [BuildActivity(HostEnvironmentOption.All)]
     [Description("Activity to run NUnit tests as part of a TFS Build")]
+    [ActivityTracking(ActivityTrackingOption.ActivityOnly)]
     public class NUnit : BaseActivity
     {
         /// <summary>
@@ -275,7 +276,7 @@ namespace TfsBuildExtensions.Activities.CodeQuality
                 Name = "WorkingDirectory"
             };
 
-            var sequence = new Sequence() {Variables = { workingDirectory} };
+            var sequence = new Sequence() { Variables = { workingDirectory } };
 
             sequence.Activities.Add(new Assign<string>
             {
@@ -349,11 +350,6 @@ namespace TfsBuildExtensions.Activities.CodeQuality
 
             sequence.Activities.Add(condition);
             return sequence;
-        }
-
-        private string GetWorkingDirectory(ActivityContext context)
-        {
-            return Path.GetDirectoryName(this.Assemblies.Get(context).First());
         }
     }
 }
