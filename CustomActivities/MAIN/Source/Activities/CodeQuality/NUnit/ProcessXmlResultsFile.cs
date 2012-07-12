@@ -1,16 +1,20 @@
-using System.Activities;
-using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Collections.Generic;
-using System;
-using System.Xml;
-
-using Microsoft.TeamFoundation.Build.Client;
+//-----------------------------------------------------------------------
+// <copyright file="ProcessXmlResultsFile.cs">(c) http://TfsBuildExtensions.codeplex.com/. This source is subject to the Microsoft Permissive License. See http://www.microsoft.com/resources/sharedsource/licensingbasics/sharedsourcelicenses.mspx. All other rights reserved.</copyright>
+//-----------------------------------------------------------------------
 
 namespace TfsBuildExtensions.Activities.CodeQuality
 {
+    using System;
+    using System.Activities;
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
+    using System.IO;
+    using System.Linq;
+    using System.Xml;
+
+    using Microsoft.TeamFoundation.Build.Client;
+
     [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Reviewed. Suppression is OK here.")]
     internal sealed class ProcessXmlResultsFile : BaseTestResultsCodeActivity
     {

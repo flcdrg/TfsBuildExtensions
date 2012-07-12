@@ -2,6 +2,8 @@
 // <copyright file="NUnit.cs">(c) http://TfsBuildExtensions.codeplex.com/. This source is subject to the Microsoft Permissive License. See http://www.microsoft.com/resources/sharedsource/licensingbasics/sharedsourcelicenses.mspx. All other rights reserved.</copyright>
 //-----------------------------------------------------------------------
 
+using Microsoft.TeamFoundation.Build.Workflow.Activities;
+
 namespace TfsBuildExtensions.Activities.CodeQuality
 {
     using System;
@@ -285,6 +287,48 @@ namespace TfsBuildExtensions.Activities.CodeQuality
                 DisplayName = "Assign working directory"
             });
 
+            this.AddActivity(sequence);
+
+            var processXml = new ProcessXmlResultsFile()
+            {
+                DisplayName = "Process XML Results",
+                Errors = new OutArgument<int>(x => this.Errors.GetLocation(x).Value),
+                Failures = new OutArgument<int>(x => this.Failures.GetLocation(x).Value),
+                Ignored = new OutArgument<int>(x => this.Ignored.GetLocation(x).Value),
+                Inconclusive = new OutArgument<int>(x => this.Inconclusive.GetLocation(x).Value),
+                Invalid = new OutArgument<int>(x => this.Invalid.GetLocation(x).Value),
+                NotRun = new OutArgument<int>(x => this.NotRun.GetLocation(x).Value),
+                Skipped = new OutArgument<int>(x => this.Skipped.GetLocation(x).Value),
+                Total = new OutArgument<int>(x => this.Total.GetLocation(x).Value),
+                OutputXmlFile = new InArgument<string>(x => this.OutputXmlFile.Get(x)),
+                WorkingDirectory = new InArgument<string>(x => workingDirectory.Get(x))
+            };
+
+            sequence.Activities.Add(processXml);
+
+            var publishResults = new PublishTestResultsToTfs()
+            {
+                DisplayName = "Publish to TFS",
+                Flavor = new InArgument<string>(x => this.Flavor.Get(x)),
+                OutputXmlFile = new InArgument<string>(x => this.OutputXmlFile.Get(x)),
+                Platform = new InArgument<string>(x => this.Platform.Get(x)),
+                WorkingDirectory = new InArgument<string>(x => workingDirectory.Get(x))
+            };
+
+            var condition = new If
+            {
+                DisplayName = "If PublishTestResults",
+                Condition = new InArgument<bool>(x => this.PublishTestResults.Get(x)), 
+                Then = publishResults,
+                Else = new WriteBuildMessage() { Message = new InArgument<string>("Results not published"), Importance = new InArgument<BuildMessageImportance>(BuildMessageImportance.High) }
+            };
+
+            sequence.Activities.Add(condition);
+            return sequence;
+        }
+
+        protected virtual void AddActivity(Sequence sequence)
+        {
             var item = new NUnitInternal()
             {
                 Assemblies = new InArgument<IEnumerable<string>>(x => this.Assemblies.Get(x)),
@@ -319,37 +363,6 @@ namespace TfsBuildExtensions.Activities.CodeQuality
             };
 
             sequence.Activities.Add(item);
-
-            var processXml = new ProcessXmlResultsFile()
-            {
-                DisplayName = "Process XML Results",
-                Errors = new OutArgument<int>(x => this.Errors.GetLocation(x).Value),
-                Failures = new OutArgument<int>(x => this.Failures.GetLocation(x).Value),
-                Ignored = new OutArgument<int>(x => this.Ignored.GetLocation(x).Value),
-                Inconclusive = new OutArgument<int>(x => this.Inconclusive.GetLocation(x).Value),
-                Invalid = new OutArgument<int>(x => this.Invalid.GetLocation(x).Value),
-                NotRun = new OutArgument<int>(x => this.NotRun.GetLocation(x).Value),
-                Skipped = new OutArgument<int>(x => this.Skipped.GetLocation(x).Value),
-                Total = new OutArgument<int>(x => this.Total.GetLocation(x).Value),
-                OutputXmlFile = new InArgument<string>(x => this.OutputXmlFile.Get(x)),
-                WorkingDirectory = new InArgument<string>(x => workingDirectory.Get(x))
-            };
-
-            sequence.Activities.Add(processXml);
-
-            var publishResults = new PublishTestResultsToTfs()
-            {
-                DisplayName = "Publish to TFS",
-                Flavor = new InArgument<string>(x => this.Flavor.Get(x)),
-                OutputXmlFile = new InArgument<string>(x => this.OutputXmlFile.Get(x)),
-                Platform = new InArgument<string>(x => this.Platform.Get(x)),
-                WorkingDirectory = new InArgument<string>(x => workingDirectory.Get(x))
-            };
-
-            var condition = new If { Condition = new InArgument<bool>(x => this.PublishTestResults.Get(x)), Then = publishResults };
-
-            sequence.Activities.Add(condition);
-            return sequence;
         }
     }
 }

@@ -2,7 +2,6 @@
 // <copyright file="NUnitDotCover.cs">(c) http://TfsBuildExtensions.codeplex.com/. This source is subject to the Microsoft Permissive License. See http://www.microsoft.com/resources/sharedsource/licensingbasics/sharedsourcelicenses.mspx. All other rights reserved.</copyright>
 //-----------------------------------------------------------------------
 
-
 namespace TfsBuildExtensions.Activities.CodeQuality
 {
     using System.Activities;
@@ -79,14 +78,8 @@ namespace TfsBuildExtensions.Activities.CodeQuality
         [Description("Path to dotCover working directory")]
         public InArgument<string> TargetWorkingDirectory { get; set; }
 
-        /// <summary>
-        /// Create body
-        /// </summary>
-        /// <returns>Activity object</returns>
-        protected override Activity CreateInternalBody()
+        protected override void AddActivity(Sequence sequence)
         {
-            var sequence = new Sequence();
-
             var item = new NUnitDotCoverInternal()
             {
                 Assemblies = new InArgument<IEnumerable<string>>(x => this.Assemblies.Get(x)),
@@ -152,7 +145,6 @@ namespace TfsBuildExtensions.Activities.CodeQuality
             };
 
             sequence.Activities.Add(xmlReport);
-            return sequence;
         }
     }
 }
