@@ -71,11 +71,13 @@ namespace TfsBuildExtensions.Activities.CodeQuality
 
             builder.AppendSwitch(this.AnalyzeTargetArguments.Get(context) ? "/AnalyzeTargetArguments=True" : "/AnalyzeTargetArguments=False");
 
-            builder.AppendSwitchIfNotNull("/TargetExecutable=", this.GenerateFullPathToTool(context));
-
             builder.AppendSwitchIfNotNull("/TargetWorkingDir=", this.TargetWorkingDirectory.Get(context));
             builder.AppendSwitchIfNotNull("/Output=", this.CoverageOutputFile.Get(context));
 
+            // path to NUnit
+            builder.AppendSwitchIfNotNull("/TargetExecutable=", base.GenerateFullPathToTool(context));
+
+            // NUnit arguments
             builder.AppendSwitchIfNotNull("/TargetArguments=", base.GenerateCommandLineCommands(context, outputFolder));
 
             return builder.ToString();

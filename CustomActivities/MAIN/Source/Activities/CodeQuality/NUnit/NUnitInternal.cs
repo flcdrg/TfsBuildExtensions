@@ -291,7 +291,7 @@ namespace TfsBuildExtensions.Activities.CodeQuality
             return Path.GetDirectoryName(this.Assemblies.Get(this.ActivityContext).First());
         }
 
-        protected void RunTests(string fullPath, string workingDirectory)
+        private void RunTests(string fullPath, string workingDirectory)
         {
             int exitCode = this.RunProcess(fullPath, workingDirectory, this.GenerateCommandLineCommands(this.ActivityContext, workingDirectory));
             this.ExitCode.Set(this.ActivityContext, exitCode);
