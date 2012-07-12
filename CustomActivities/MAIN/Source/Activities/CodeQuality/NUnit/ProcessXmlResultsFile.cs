@@ -97,6 +97,10 @@ namespace TfsBuildExtensions.Activities.CodeQuality
                     buildDetail.Status = BuildStatus.PartiallySucceeded;
                 }
             }
+            else
+            {
+                this.LogBuildError(string.Format("File not found: {0}", filename));
+            }
         }
 
         private static int GetAttributeInt32Value(string name, XmlNode node)

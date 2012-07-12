@@ -2,6 +2,8 @@
 // <copyright file="NUnit.cs">(c) http://TfsBuildExtensions.codeplex.com/. This source is subject to the Microsoft Permissive License. See http://www.microsoft.com/resources/sharedsource/licensingbasics/sharedsourcelicenses.mspx. All other rights reserved.</copyright>
 //-----------------------------------------------------------------------
 
+using System.IO;
+
 using Microsoft.TeamFoundation.Build.Workflow.Activities;
 
 namespace TfsBuildExtensions.Activities.CodeQuality
@@ -283,7 +285,7 @@ namespace TfsBuildExtensions.Activities.CodeQuality
             sequence.Activities.Add(new Assign<string>
             {
                 To = workingDirectory, 
-                Value = new InArgument<string>(x => this.Assemblies.Get(x).First()), 
+                Value = new InArgument<string>(x => Path.GetDirectoryName(this.Assemblies.Get(x).First())), 
                 DisplayName = "Assign working directory"
             });
 
