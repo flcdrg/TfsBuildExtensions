@@ -1,3 +1,6 @@
+//-----------------------------------------------------------------------
+// <copyright file="GenerateReport.cs">(c) http://TfsBuildExtensions.codeplex.com/. This source is subject to the Microsoft Permissive License. See http://www.microsoft.com/resources/sharedsource/licensingbasics/sharedsourcelicenses.mspx. All other rights reserved.</copyright>
+//-----------------------------------------------------------------------
 
 namespace TfsBuildExtensions.Activities.CodeQuality
 {
@@ -17,6 +20,8 @@ namespace TfsBuildExtensions.Activities.CodeQuality
 
         public InArgument<string> CoverageOutputFile { get; set; }
 
+        public InArgument<string> ReportFile { get; set; }
+
         public InArgument<string> CoverageToolPath { get; set; }
 
         public InArgument<ReportType> Type { get; set; }
@@ -27,10 +32,10 @@ namespace TfsBuildExtensions.Activities.CodeQuality
 
             string workingDirectory = this.TargetWorkingDirectory.Get(this.ActivityContext);
 
-            this.RunProcess(fullPath, workingDirectory, this.GenerateReportCommandLineCommands(this.ActivityContext, this.Type.Get(this.ActivityContext), this.CoverageOutputFile.Get(this.ActivityContext)));
+            this.RunProcess(fullPath, workingDirectory, this.GenerateReportCommandLineCommands(this.ActivityContext, this.Type.Get(this.ActivityContext), this.ReportFile.Get(this.ActivityContext)));
         }
 
-        private string GenerateReportCommandLineCommands(ActivityContext context, ReportType reportType, string outputPath)
+        private string GenerateReportCommandLineCommands(ActivityContext context, ReportType reportType, string reportPath)
         {
             // C:\Program Files (x86)\JetBrains\dotCover\v2.0\Bin\dotCover.exe report /Source="E:\30\67\Binaries\DotCoverReport\Coverage.bin" /ReportType=XML /Output=E:\30\67\Binaries\DotCoverReport\Coverage.xml
             var builder = new SimpleCommandLineBuilder();
@@ -41,7 +46,7 @@ namespace TfsBuildExtensions.Activities.CodeQuality
 
             builder.AppendSwitchIfNotNull("/ReportType=", reportType.ToString().ToUpperInvariant());
 
-            builder.AppendSwitchIfNotNull("/Output=", outputPath);
+            builder.AppendSwitchIfNotNull("/Output=", reportPath);
 
             return builder.ToString();
         }

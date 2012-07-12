@@ -128,27 +128,28 @@ namespace TfsBuildExtensions.Activities.CodeQuality
 
             var htmlReport = new GenerateReport
             {
-                TargetWorkingDirectory = new InArgument<string>(x => this.TargetWorkingDirectory.Get(x)),
-                CoverageOutputFile = new InArgument<string>(x => this.CoverageOutputHtmlFile.Get(x)),
-                Type = new InArgument<ReportType>(ReportType.Html),
+                CoverageOutputFile = new InArgument<string>(x => this.CoverageOutputFile.Get(x)),
                 CoverageToolPath = new InArgument<string>(x => this.CoverageToolPath.Get(x)),
-                DisplayName = "HTML Report"
+                DisplayName = "HTML Report",
+                ReportFile = new InArgument<string>(x => this.CoverageOutputHtmlFile.Get(x)),
+                TargetWorkingDirectory = new InArgument<string>(x => this.TargetWorkingDirectory.Get(x)),
+                Type = new InArgument<ReportType>(ReportType.Html),
             };
 
             sequence.Activities.Add(htmlReport);
 
             var xmlReport = new GenerateReport
             {
-                TargetWorkingDirectory = new InArgument<string>(x => this.TargetWorkingDirectory.Get(x)),
-                CoverageOutputFile = new InArgument<string>(x => this.CoverageOutputXmlFile.Get(x)),
-                Type = new InArgument<ReportType>(ReportType.Xml),
+                CoverageOutputFile = new InArgument<string>(x => this.CoverageOutputFile.Get(x)),
                 CoverageToolPath = new InArgument<string>(x => this.CoverageToolPath.Get(x)),
-                DisplayName = "XML Report"
+                DisplayName = "XML Report",
+                ReportFile = new InArgument<string>(x => this.CoverageOutputXmlFile.Get(x)),
+                TargetWorkingDirectory = new InArgument<string>(x => this.TargetWorkingDirectory.Get(x)),
+                Type = new InArgument<ReportType>(ReportType.Xml),
             };
 
             sequence.Activities.Add(xmlReport);
             return sequence;
         }
-
     }
 }

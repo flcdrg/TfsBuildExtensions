@@ -172,3 +172,5 @@ pip-log.txt
 /CustomActivities/MAIN/Source/BuildBinaries
 /CustomActivities/MAIN/Source/Output
 /CodePlex/Code Activities
+/TFSBuildManager\MAIN\Source/BuildBinaries
+/TFSBuildManager\MAIN\Source/UpgradeLog.htm
