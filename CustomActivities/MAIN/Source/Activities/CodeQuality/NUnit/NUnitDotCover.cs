@@ -17,7 +17,7 @@ namespace TfsBuildExtensions.Activities.CodeQuality
     /// Run NUnit using dotCover for code coverage
     /// </summary>
     [BuildActivity(HostEnvironmentOption.All)]
-    [ActivityTracking(ActivityTrackingOption.ActivityOnly)]
+    [ActivityTracking(ActivityTrackingOption.ActivityTree)]
     [Description("Activity to run NUnit with dotCover as part of a TFS Build")]
     public class NUnitDotCover : NUnit
     {
