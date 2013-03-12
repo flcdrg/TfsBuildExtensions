@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <xsl:transform version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:output indent="yes" />
+    <xsl:param name="reportName" />
+    
 	<xsl:variable name="guidStub">
 		<xsl:call-template name="testRunGuid">
 			<xsl:with-param name="date" select="/test-results/@date"/>
@@ -17,7 +19,7 @@
 				<xsl:value-of select="concat(//environment/@machine-name,'\',//environment/@user)"/>
 			</xsl:attribute>
 			<xsl:attribute name="name">
-				<xsl:value-of select="concat(//environment/@user,'@',//environment/@machine-name,' ',/test-results/@date,' ',/test-results/@time)"/>
+				<xsl:value-of select="concat($reportName, //environment/@user,'@',//environment/@machine-name,' ',/test-results/@date,' ',/test-results/@time)"/>
 			</xsl:attribute>
 			<TestSettings name="Default Test Settings" id="8dfb34aa-91bc-45e3-8609-d0a4e732d982">
 				<Deployment>

@@ -37,7 +37,7 @@ namespace TfsBuildExtensions.Activities.CodeQuality
     /// </summary>
     [BuildActivity(HostEnvironmentOption.All)]
     [Description("Activity to run NUnit tests as part of a TFS Build")]
-    [ActivityTracking(ActivityTrackingOption.ActivityOnly)]
+    [ActivityTracking(ActivityTrackingOption.ActivityTree)]
     public class NUnit : BaseActivity
     {
         /// <summary>
@@ -77,6 +77,16 @@ namespace TfsBuildExtensions.Activities.CodeQuality
         [Browsable(true)]
         [Description("Set to true to publish test results back to TFS")]
         public InArgument<bool> PublishTestResults { get; set; }
+
+/*
+        /// <summary>
+        /// Set to true to publish test results back to TFS
+        /// </summary>
+        [Browsable(true)]
+        [Description("The name to use for the TFS report")]
+        [DefaultValue("TestResults")]
+        public InArgument<string> PublishName { get; set; }
+*/
 
         /// <summary>
         /// Which platform to publish test results for (ex. Any CPU)
@@ -282,6 +292,7 @@ namespace TfsBuildExtensions.Activities.CodeQuality
 
             var sequence = new Sequence() { Variables = { workingDirectory } };
 
+            
             sequence.Activities.Add(new Assign<string>
             {
                 To = workingDirectory, 
@@ -314,7 +325,8 @@ namespace TfsBuildExtensions.Activities.CodeQuality
                 Flavor = new InArgument<string>(x => this.Flavor.Get(x)),
                 OutputXmlFile = new InArgument<string>(x => this.OutputXmlFile.Get(x)),
                 Platform = new InArgument<string>(x => this.Platform.Get(x)),
-                WorkingDirectory = new InArgument<string>(x => workingDirectory.Get(x))
+                WorkingDirectory = new InArgument<string>(x => workingDirectory.Get(x)),
+                ReportName = new InArgument<string>(x => string.Join(", ", this.Assemblies.Get(x)))
             };
 
             var condition = new If

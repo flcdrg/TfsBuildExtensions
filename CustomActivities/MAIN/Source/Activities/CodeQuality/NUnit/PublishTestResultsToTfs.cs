@@ -20,6 +20,11 @@ namespace TfsBuildExtensions.Activities.CodeQuality
         /// </summary>
         public InArgument<string> Flavor { get; set; }
 
+        /// <summary>
+        /// Name of TFS Report
+        /// </summary>
+        public InArgument<string> ReportName { get; set; }
+
         protected override void InternalExecute()
         {
             if (string.IsNullOrEmpty(this.Platform.Get(this.ActivityContext)) || string.IsNullOrEmpty(this.Flavor.Get(this.ActivityContext)))
@@ -38,7 +43,9 @@ namespace TfsBuildExtensions.Activities.CodeQuality
                 return;
             }
 
-            this.TransformNUnitToMsTest(filename, resultTrxFile);
+            string reportName = this.ReportName.Get(this.ActivityContext);
+
+            this.TransformNUnitToMsTest(filename, resultTrxFile, reportName);
 
             var buildDetail = this.ActivityContext.GetExtension<IBuildDetail>();
             string collectionUrl = buildDetail.BuildServer.TeamProjectCollection.Uri.ToString();
@@ -46,10 +53,11 @@ namespace TfsBuildExtensions.Activities.CodeQuality
             string teamProject = buildDetail.TeamProject;
             string platform = this.Platform.Get(this.ActivityContext);
             string flavor = this.Flavor.Get(this.ActivityContext);
+
             this.PublishMsTestResults(resultTrxFile, collectionUrl, buildNumber, teamProject, platform, flavor);
         }
 
-        private void TransformNUnitToMsTest(string nunitResultFile, string mstestResultFile)
+        private void TransformNUnitToMsTest(string nunitResultFile, string mstestResultFile, string reportName)
         {
             Stream s = this.GetType().Assembly.GetManifestResourceStream("TfsBuildExtensions.Activities.CodeQuality.NUnit.NUnitToMSTest.xslt");
             if (s == null)
@@ -62,6 +70,15 @@ namespace TfsBuildExtensions.Activities.CodeQuality
             {
                 var transform = new XslCompiledTransform();
                 transform.Load(reader);
+
+                if (!string.IsNullOrEmpty(reportName))
+                    reportName += " ";
+                else
+                    reportName = string.Empty;
+
+                var argList = new XsltArgumentList();
+                argList.AddParam("reportName", string.Empty, reportName);
+
                 transform.Transform(nunitResultFile, mstestResultFile);
             }
         }
@@ -82,6 +99,7 @@ namespace TfsBuildExtensions.Activities.CodeQuality
                 proc.StartInfo.RedirectStandardOutput = true;
                 proc.StartInfo.RedirectStandardError = true;
                 proc.StartInfo.Arguments = arguments;
+
                 this.LogBuildMessage("Running " + proc.StartInfo.FileName + " " + proc.StartInfo.Arguments, BuildMessageImportance.High);
 
                 if (!string.IsNullOrEmpty(workingDirectory))

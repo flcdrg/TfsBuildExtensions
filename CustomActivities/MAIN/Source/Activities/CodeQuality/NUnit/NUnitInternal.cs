@@ -2,6 +2,11 @@
 // <copyright file="NUnitInternal.cs">(c) http://TfsBuildExtensions.codeplex.com/. This source is subject to the Microsoft Permissive License. See http://www.microsoft.com/resources/sharedsource/licensingbasics/sharedsourcelicenses.mspx. All other rights reserved.</copyright>
 //-----------------------------------------------------------------------
 
+using System.Activities.Tracking;
+using System.Text;
+
+using Microsoft.TeamFoundation.Build.Workflow.Activities;
+
 namespace TfsBuildExtensions.Activities.CodeQuality
 {
     using System;
@@ -270,6 +275,7 @@ namespace TfsBuildExtensions.Activities.CodeQuality
         protected override void InternalExecute()
         {
             string fullPath = this.GenerateFullPathToTool(this.ActivityContext);
+ 
             if (!File.Exists(fullPath))
             {
                 this.LogBuildError(string.Format(fullPath + " was not found. Use ToolPath to specify it."));
@@ -297,8 +303,14 @@ namespace TfsBuildExtensions.Activities.CodeQuality
             this.ExitCode.Set(this.ActivityContext, exitCode);
         }
 
+        private IList<string> _output;
+        private IList<string> _error;
+
         private int RunProcess(string fullPath, string workingDirectory, string arguments)
         {
+            _output = new List<string>();
+            _error = new List<string>();
+
             using (var proc = new Process())
             {
                 proc.StartInfo.FileName = fullPath;
@@ -306,6 +318,9 @@ namespace TfsBuildExtensions.Activities.CodeQuality
                 proc.StartInfo.UseShellExecute = false;
                 proc.StartInfo.RedirectStandardOutput = true;
                 proc.StartInfo.RedirectStandardError = true;
+
+                proc.OutputDataReceived += ProcOnOutputDataReceived;
+                proc.ErrorDataReceived += ProcOnErrorDataReceived;
                 proc.StartInfo.Arguments = arguments;
                 this.LogBuildMessage("Running " + proc.StartInfo.FileName + " " + proc.StartInfo.Arguments, BuildMessageImportance.High);
 
@@ -316,21 +331,43 @@ namespace TfsBuildExtensions.Activities.CodeQuality
 
                 proc.Start();
 
-                string outputStream = proc.StandardOutput.ReadToEnd();
-                if (outputStream.Length > 0)
-                {
-                    this.LogBuildMessage(outputStream);
-                }
-
-                string errorStream = proc.StandardError.ReadToEnd();
-                if (errorStream.Length > 0)
-                {
-                    this.LogBuildError(errorStream);
-                }
+                proc.BeginOutputReadLine();
+                proc.BeginErrorReadLine();
 
                 proc.WaitForExit();
+
+                proc.OutputDataReceived -= ProcOnOutputDataReceived;
+                proc.ErrorDataReceived -= ProcOnErrorDataReceived;
+
+                if (proc.ExitCode != 0)
+                {
+                    // write normal output as an error
+                    foreach (var s in _output)
+                        if (!string.IsNullOrWhiteSpace(s))
+                            this.LogBuildError(s);
+                }
+
                 return proc.ExitCode;
             }
+        }
+
+        private void ProcOnErrorDataReceived(object sender, DataReceivedEventArgs dataReceivedEventArgs)
+        {
+            string message = dataReceivedEventArgs.Data;
+
+            if (!string.IsNullOrWhiteSpace(message))
+            {
+                _error.Add(message);
+                this.LogBuildError(message);
+            }
+        }
+
+        private void ProcOnOutputDataReceived(object sender, DataReceivedEventArgs dataReceivedEventArgs)
+        {
+            string message = dataReceivedEventArgs.Data;
+            _output.Add(message);
+
+            this.LogBuildMessage(message);
         }
     }
 }
