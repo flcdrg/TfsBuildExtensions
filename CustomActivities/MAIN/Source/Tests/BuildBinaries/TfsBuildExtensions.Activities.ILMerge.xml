@@ -4,42 +4,6 @@
         <name>TfsBuildExtensions.Activities.ILMerge</name>
     </assembly>
     <members>
-        <member name="T:TfsBuildExtensions.Activities.Framework.ILMergeAction">
-            <summary>
-            ILMergeAction
-            </summary>
-        </member>
-        <member name="F:TfsBuildExtensions.Activities.Framework.ILMergeAction.Merge">
-            <summary>
-            Merge
-            </summary>
-        </member>
-        <member name="T:TfsBuildExtensions.Activities.Framework.TargetKind">
-            <summary>
-            TargetKind
-            </summary>
-        </member>
-        <member name="F:TfsBuildExtensions.Activities.Framework.TargetKind.Dll">
-            <summary>
-            Dll
-            </summary>
-        </member>
-        <member name="F:TfsBuildExtensions.Activities.Framework.TargetKind.Exe">
-            <summary>
-            Exe
-            </summary>
-        </member>
-        <member name="F:TfsBuildExtensions.Activities.Framework.TargetKind.SameAsPrimaryAssembly">
-            <summary>
-            SameAsPrimaryAssembly
-            </summary>
-        </member>
-        <member name="T:TfsBuildExtensions.Activities.Framework.ILMerge">
-            <summary>
-            <b>Valid Action values are:</b>
-            <para><i>Merge</i></para>
-            </summary>
-        </member>
         <member name="T:TfsBuildExtensions.Activities.BaseCodeActivity">
             <summary>
             Provides a base class to all Activities which support remoting
@@ -158,6 +122,72 @@
         <member name="P:TfsBuildExtensions.Activities.BaseCodeActivity.ActivityContext">
             <summary>
             Variable to hold CodeActivityContext
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.FailingBuildException">
+            <summary>
+            FailingBuild Exception
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.FailingBuildException.#ctor">
+            <summary>
+            Initializes a new instance of the FailingBuildException class
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.FailingBuildException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the FailingBuildException class
+            </summary>
+            <param name="message">Message to send</param>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.FailingBuildException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the FailingBuildException class
+            </summary>
+            <param name="message">Message to send</param>
+            <param name="innerException">Inner exception details</param>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.FailingBuildException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the FailingBuildException class
+            </summary>
+            <param name="info">Serialization information for the exception</param>
+            <param name="context">The streaming context for the exception</param>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Framework.ILMergeAction">
+            <summary>
+            ILMergeAction
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Framework.ILMergeAction.Merge">
+            <summary>
+            Merge
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Framework.TargetKind">
+            <summary>
+            TargetKind
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Framework.TargetKind.Dll">
+            <summary>
+            Dll
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Framework.TargetKind.Exe">
+            <summary>
+            Exe
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.Framework.TargetKind.SameAsPrimaryAssembly">
+            <summary>
+            SameAsPrimaryAssembly
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.Framework.ILMerge">
+            <summary>
+            <b>Valid Action values are:</b>
+            <para><i>Merge</i></para>
             </summary>
         </member>
         <member name="M:TfsBuildExtensions.Activities.Framework.ILMerge.InternalExecute">
@@ -383,36 +413,6 @@
             <summary>
             Gets the ExitCode of ILMerge
             </summary>
-        </member>
-        <member name="T:TfsBuildExtensions.Activities.FailingBuildException">
-            <summary>
-            FailingBuild Exception
-            </summary>
-        </member>
-        <member name="M:TfsBuildExtensions.Activities.FailingBuildException.#ctor">
-            <summary>
-            Initializes a new instance of the FailingBuildException class
-            </summary>
-        </member>
-        <member name="M:TfsBuildExtensions.Activities.FailingBuildException.#ctor(System.String)">
-            <summary>
-            Initializes a new instance of the FailingBuildException class
-            </summary>
-            <param name="message">Message to send</param>
-        </member>
-        <member name="M:TfsBuildExtensions.Activities.FailingBuildException.#ctor(System.String,System.Exception)">
-            <summary>
-            Initializes a new instance of the FailingBuildException class
-            </summary>
-            <param name="message">Message to send</param>
-            <param name="innerException">Inner exception details</param>
-        </member>
-        <member name="M:TfsBuildExtensions.Activities.FailingBuildException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <summary>
-            Initializes a new instance of the FailingBuildException class
-            </summary>
-            <param name="info">Serialization information for the exception</param>
-            <param name="context">The streaming context for the exception</param>
         </member>
     </members>
 </doc>

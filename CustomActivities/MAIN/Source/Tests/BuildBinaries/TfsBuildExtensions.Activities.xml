@@ -1468,6 +1468,31 @@
             UnknownMetricNameException
             </summary>
         </member>
+        <member name="T:TfsBuildExtensions.Activities.CodeQuality.DomainUsage">
+            <summary>
+            Controls of the creation of AppDomains for running tests
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.CodeQuality.DomainUsage.Default">
+            <summary>
+            Use multiple domains if multiple assemblies are listed on the command line. Otherwise a single domain is used
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.CodeQuality.DomainUsage.None">
+            <summary>
+            No domain is created - the tests are run in the primary domain
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.CodeQuality.DomainUsage.Single">
+            <summary>
+            A test domain is created
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.CodeQuality.DomainUsage.Multiple">
+            <summary>
+            A separate test domain is created for each assembly
+            </summary>
+        </member>
         <member name="T:TfsBuildExtensions.Activities.CodeQuality.NUnit">
             <summary>
             Executes Test Cases using NUnit (Tested using v2.5.7)
@@ -1492,10 +1517,11 @@
             Initializes a new instance of the NUnit class
             </summary>
         </member>
-        <member name="M:TfsBuildExtensions.Activities.CodeQuality.NUnit.InternalExecute">
+        <member name="M:TfsBuildExtensions.Activities.CodeQuality.NUnit.CreateInternalBody">
             <summary>
-            Executes the logic for this custom activity
+            Create activity
             </summary>
+            <returns>Activity object</returns>
         </member>
         <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnit.Version">
             <summary>
@@ -1513,6 +1539,11 @@
             </summary>
         </member>
         <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnit.PublishTestResults">
+            <summary>
+            Set to true to publish test results back to TFS
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnit.PublishName">
             <summary>
             Set to true to publish test results back to TFS
             </summary>
@@ -1650,6 +1681,276 @@
         <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnit.ExitCode">
             <summary>
             Name of the test case(s), fixture(s) or namespace(s) to run
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.CodeQuality.NUnitDotCover">
+            <summary>
+            Run NUnit using dotCover for code coverage
+            </summary>
+        </member>
+        <member name="M:TfsBuildExtensions.Activities.CodeQuality.NUnitDotCover.#ctor">
+            <summary>
+            Create instance
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitDotCover.CoverageToolPath">
+            <summary>
+            Path to dotCover
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitDotCover.AnalyzeTargetArguments">
+            <summary>
+            True if TargetArguments paths are made absolute
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitDotCover.CoverageOutputFile">
+            <summary>
+            dotCover output file
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitDotCover.CoverageOutputXmlFile">
+            <summary>
+            XML output file
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitDotCover.CoverageOutputHtmlFile">
+            <summary>
+            HTML output file
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitDotCover.ConfigFile">
+            <summary>
+            dotCover config file
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitDotCover.TargetWorkingDirectory">
+            <summary>
+            dotCover working directory
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitInternal.Version">
+            <summary>
+            The version of NUnit to run. Default is 2.5.7
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitInternal.ToolPath">
+            <summary>
+            Gets or sets the ToolPath (defaults to %ProgramFiles%\Nunit {version}\bin\nunit-console[-86].exe
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitInternal.Assemblies">
+            <summary>
+            The assemblies to process.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitInternal.PublishTestResults">
+            <summary>
+            Set to true to publish test results back to TFS
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitInternal.Platform">
+            <summary>
+            Which platform to publish test results for (ex. Any CPU)
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitInternal.Flavor">
+            <summary>
+            Which flavor to publish test results for (ex. Debug)
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitInternal.Use32Bit">
+            <summary>
+            Set to true to run nunit-console-x86.exe
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitInternal.IncludeCategory">
+            <summary>
+            Comma separated list of categories to include.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitInternal.ExcludeCategory">
+            <summary>
+            Comma separated list of categories to exclude.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitInternal.OutputXmlFile">
+            <summary>
+            Sets the OutputXmlFile name
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitInternal.ErrorOutputFile">
+            <summary>
+            Sets the File to receive test error output
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitInternal.OutputFile">
+            <summary>
+            File to receive test output
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitInternal.NoThread">
+            <summary>
+            Disable use of a separate thread for tests. Default is false.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitInternal.Failures">
+            <summary>
+            Gets the Failures count
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitInternal.NotRun">
+            <summary>
+            Gets the NotRun count
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitInternal.Total">
+            <summary>
+            Gets the Total count
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitInternal.Errors">
+            <summary>
+            Gets the Errors count
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitInternal.Inconclusive">
+            <summary>
+            Gets the Inconclusive count
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitInternal.Ignored">
+            <summary>
+            Gets the Ignored count
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitInternal.Skipped">
+            <summary>
+            Gets the Skipped count
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitInternal.Invalid">
+            <summary>
+            Gets the Invalid count
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitInternal.NoShadow">
+            <summary>
+            Disable shadow copy when running in separate domain. Default is false.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitInternal.Configuration">
+            <summary>
+            Sets the Project configuration (e.g.: Debug) to load
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitInternal.Process">
+            <summary>
+            Process model for tests. Supports Single, Separate, Multiple. Single is the Default
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitInternal.Domain">
+            <summary>
+            AppDomain Usage for tests. Supports None, Single, Multiple. The default is to use multiple domains if multiple assemblies are listed on the command line. Otherwise a single domain is used.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitInternal.Framework">
+            <summary>
+            Framework version to be used for tests
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitInternal.Labels">
+            <summary>
+            Label each test in stdOut. Default is false.
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitInternal.Run">
+            <summary>
+            Name of the test case(s), fixture(s) or namespace(s) to run
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.NUnitInternal.ExitCode">
+            <summary>
+            Name of the test case(s), fixture(s) or namespace(s) to run
+            </summary>
+        </member>
+        <member name="T:TfsBuildExtensions.Activities.CodeQuality.ProcessModel">
+            <summary>
+            Controls how NUnit loads tests in processes
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.CodeQuality.ProcessModel.Default">
+            <summary>
+            Default process model
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.CodeQuality.ProcessModel.Single">
+            <summary>
+            All the tests are run in the nunit-console process
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.CodeQuality.ProcessModel.Separate">
+            <summary>
+            A separate process is created to run the tests
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.CodeQuality.ProcessModel.Multiple">
+            <summary>
+            A separate process is created for each test assembly, whether specified on the command line or listed in an NUnit project file
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.ProcessXmlResultsFile.NotRun">
+            <summary>
+            Gets the NotRun count
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.ProcessXmlResultsFile.Total">
+            <summary>
+            Gets the Total count
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.ProcessXmlResultsFile.Errors">
+            <summary>
+            Gets the Errors count
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.ProcessXmlResultsFile.Inconclusive">
+            <summary>
+            Gets the Inconclusive count
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.ProcessXmlResultsFile.Ignored">
+            <summary>
+            Gets the Ignored count
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.ProcessXmlResultsFile.Skipped">
+            <summary>
+            Gets the Skipped count
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.ProcessXmlResultsFile.Invalid">
+            <summary>
+            Gets the Invalid count
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.PublishTestResultsToTfs.Flavor">
+            <summary>
+            Which flavor to publish test results for (ex. Debug)
+            </summary>
+        </member>
+        <member name="P:TfsBuildExtensions.Activities.CodeQuality.PublishTestResultsToTfs.ReportName">
+            <summary>
+            Name of TFS Report
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.CodeQuality.ReportType.Xml">
+            <summary>
+            XML Report
+            </summary>
+        </member>
+        <member name="F:TfsBuildExtensions.Activities.CodeQuality.ReportType.Html">
+            <summary>
+            HTML Report
             </summary>
         </member>
         <member name="T:TfsBuildExtensions.Activities.CodeQuality.Extended.SimpleCommandLineBuilder">
